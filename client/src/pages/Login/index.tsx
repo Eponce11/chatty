@@ -13,7 +13,7 @@ const Login = () => {
         </label>
         <input
           type="text"
-          className="w-full h-[40px] bg-[#1E1F22] text-[#F2F3F5] outline-none pl-2 rounded-sm mt-1 mb-2"
+          className="w-full h-[40px] bg-[#1E1F22] text-[#F2F3F5] outline-none pl-2 rounded-sm mt-1 mb-3"
         />
         <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
           PASSWORD <span className="text-[red]">*</span>
