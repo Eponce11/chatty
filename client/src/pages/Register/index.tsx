@@ -39,7 +39,7 @@ const Register = () => {
           DATE OF BIRTH <span className="text-[red]">*</span>
         </label>
         <div className="flex justify-between">
-          <select>
+          <select className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px]">
             {months.map((month: string) => {
               return <option>{month}</option>;
             })}
