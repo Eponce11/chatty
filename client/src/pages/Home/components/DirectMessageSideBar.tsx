@@ -1,7 +1,9 @@
-import { UserSvg } from "../../../common/static/svg";
 import { directMessageSideBarChannels } from "../constants";
+import { ChannelWrapper } from ".";
 
 const DirectMessageSideBar = () => {
+  const tempData = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
   return (
     <div className="h-full w-[240px] bg-[#2B2D31]">
       <div className="w-full h-[48px] border-b border-b-[#1F2023] flex items-center justify-center">
@@ -14,18 +16,27 @@ const DirectMessageSideBar = () => {
         <ul>
           {directMessageSideBarChannels.map((channel, idx) => {
             return (
-              <li className="h-[44px] w-full flex items-center pl-3 text-[#949BA4] rounded-md hover:cursor-pointer hover:text-[white] hover:bg-[#34363b]">
-                <channel.icon />
-                <UserSvg
-                />
-                Friends
-              </li>
+              <ChannelWrapper
+                key={idx}
+                Icon={channel.icon}
+                label={channel.label}
+              />
             );
           })}
         </ul>
 
-        <ul className="w-full">
-          <li className="w-full h-[40px] bg-[red] mt-10"></li>
+        <ul className="w-full text-[#949BA0] mt-4">
+          <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default">
+            DIRECT MESSAGES
+          </span>
+          {tempData.map((data, idx) => {
+            return (
+              <li className="w-full h-[40px] mb-[2px] flex items-center px-2 rounded-sm hover:bg-[#34363b] hover:text-[white] cursor-pointer">
+                <div className="bg-[blue] h-[32px] aspect-square rounded-full mr-2"/>
+                <span>Username</span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

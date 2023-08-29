@@ -1,4 +1,4 @@
-import { UserSvg } from "../../common/static/svg";
+import { UserSvg, MessageSvg } from "../../common/static/svg";
 
 const directMessageSideBarChannels = [
   {
@@ -6,8 +6,8 @@ const directMessageSideBarChannels = [
     label: "Friends",
   },
   {
-    icon: UserSvg,
-    label: "Friends",
+    icon: MessageSvg,
+    label: "Message Requests",
   },
 ];
 
