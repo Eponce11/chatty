@@ -1,3 +1,6 @@
+import { UserSvg } from "../../../common/static/svg";
+import { directMessageSideBarChannels } from "../constants";
+
 const DirectMessageSideBar = () => {
   return (
     <div className="h-full w-[240px] bg-[#2B2D31]">
@@ -7,13 +10,28 @@ const DirectMessageSideBar = () => {
         </div>
       </div>
 
-      <ul className="w-full px-2">
-        <li className="w-full h-[40px] bg-[red] mt-10"></li>
-      </ul>
+      <div className="w-full px-2 mt-2">
+        <ul>
+          {directMessageSideBarChannels.map((channel, idx) => {
+            return (
+              <li className="h-[44px] w-full flex items-center pl-3 text-[#949BA4] rounded-md hover:cursor-pointer hover:text-[white] hover:bg-[#34363b]">
+                <channel.icon />
+                <UserSvg
+                />
+                Friends
+              </li>
+            );
+          })}
+        </ul>
+
+        <ul className="w-full">
+          <li className="w-full h-[40px] bg-[red] mt-10"></li>
+        </ul>
+      </div>
     </div>
   );
 };
 
 export default DirectMessageSideBar;
 
-// 1F2023 border bottom
+// 34363b
