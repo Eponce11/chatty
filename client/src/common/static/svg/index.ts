@@ -1,3 +1,3 @@
-
-import UserSvg from './UserSvg'
-export {  UserSvg };
+import UserSvg from "./UserSvg";
+import MessageSvg from "./MessageSvg";
+export { UserSvg, MessageSvg };
