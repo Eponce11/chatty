@@ -1,4 +1,4 @@
-import { ServerSelect, DirectMessageSideBar } from "./components";
+import { ServerSelect, DirectMessageSideBar, MessageChannel } from "./components";
 
 const Home = () => {
   return (
@@ -10,6 +10,7 @@ const Home = () => {
           
         </div>
       </div>
+      <MessageChannel />
     </div>
   );
 };
