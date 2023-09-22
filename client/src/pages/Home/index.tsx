@@ -2,7 +2,7 @@ import { ServerSelect, DirectMessageSideBar, MessageChannel } from "./components
 
 const Home = () => {
   return (
-    <div className="h-full w-full bg-[#1E1F22] flex p-1">
+    <div className="h-full w-full bg-[#1E1F22] flex px-1">
       <ServerSelect />
       <div className="w-[240px] h-full relative">
         <DirectMessageSideBar />
