@@ -2,15 +2,10 @@ const MessageChannel = () => {
   const tempMessages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0];
 
   return (
-    <div className="grow bg-[#313338] relative">
-      <section className="w-full h-[48px] border-b border-b-[#1F2023] flex items-center justify-center bg-[#313338] px-3">
-        <div className="w-full h-[28px] flex text-[white]">
-          <div className="h-full aspect-square rounded-full bg-[blue] mr-2" />
-          <span>Username</span>
-        </div>
-      </section>
+    <div className=" bg-[#313338] relative top-[48px]">
+      
 
-      <section className="absolute top-[48px] bottom-[68px] w-full flex flex-col-reverse px-3 overflow-y-scroll">
+      <section className=" bottom-[68px] w-full flex flex-col-reverse px-3 overflow-y-scroll">
         {tempMessages.map((message, idx) => {
           return (
             <div className="flex">
