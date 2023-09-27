@@ -1,11 +1,9 @@
 const MessageChannel = () => {
-  const tempMessages = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0];
+  const tempMessages = new Array(20).fill(0)
 
   return (
-    <div className=" bg-[#313338] relative top-[48px]">
-      
-
-      <section className=" bottom-[68px] w-full flex flex-col-reverse px-3 overflow-y-scroll">
+    <div className="grow relative">
+      <section className="flex flex-col-reverse px-3 absolute top-0 bottom-[68px] overflow-y-auto w-full">
         {tempMessages.map((message, idx) => {
           return (
             <div className="flex">
@@ -19,7 +17,7 @@ const MessageChannel = () => {
         })}
       </section>
 
-      <section className="h-[68px] w-full absolute bottom-0 px-3">
+      <section className="h-[68px] w-full px-3 bottom-0 absolute">
         <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
           <div className="bg-[green] h-[24px] aspect-square mr-4" />
           <input

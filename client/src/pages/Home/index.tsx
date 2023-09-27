@@ -14,20 +14,16 @@ const Home = () => {
         <div className="w-full h-[53px] bg-[red] absolute bottom-0"></div>
       </div>
 
+      <div className="grow bg-[#313338] relative">
+        <Header />
+        <div className="absolute top-[48px] bottom-0 w-full flex">
+          <MessageChannel />
+          <div className="w-[340px] h-full bg-[red]"></div>
+        </div>
+      </div>
       
     </div>
   );
 };
 
 export default Home;
-
-/*
-<div className="flex grow flex-col">
-        <Header />
-        <div className="flex grow relative">
-          <MessageChannel />
-          <div className="w-20 h-full bg-[red]"></div>
-        </div>
-      </div>
-
-*/
