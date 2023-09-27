@@ -3,6 +3,7 @@ import {
   DirectMessageSideBar,
   MessageChannel,
   Header,
+  UserSidePanel
 } from "./components";
 
 const Home = () => {
@@ -18,7 +19,7 @@ const Home = () => {
         <Header />
         <div className="absolute top-[48px] bottom-0 w-full flex">
           <MessageChannel />
-          <div className="w-[340px] h-full bg-[red]"></div>
+          <UserSidePanel />
         </div>
       </div>
       
