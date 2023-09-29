@@ -7,7 +7,7 @@ interface User {
   email: string;
   password: string;
   username: string;
-  directMessages: Array<string>;
+  directMessages: Array<mongoose.Schema.Types.ObjectId>;
 }
 
 const UserSchema = new Schema<User>(
