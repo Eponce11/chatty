@@ -14,7 +14,7 @@ dotenv.config();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
+app.use(cors({ credentials: true, origin: "http://127.0.0.1:5173" }));
 
 // connect to db
 connectToDB(DB);

@@ -42,7 +42,9 @@ export const registerUser = asyncHandler(
 export const loginUser = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    console.log(req.body)
+    const user = await User.findOne({email});
+    console.log(user)
     if (user && (await bcrypt.compare(password, user.password))) {
       return res
         .cookie("userToken", generateToken(user.id), { httpOnly: true })
