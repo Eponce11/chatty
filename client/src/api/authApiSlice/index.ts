@@ -1,14 +1,5 @@
-import { apiSlice } from "./apiSlice";
-
-interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
-interface LoginResponse {
-  id: string;
-  username: string;
-}
+import { apiSlice } from "../apiSlice";
+import { LoginCredentials, LoginResponse } from "./types";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
