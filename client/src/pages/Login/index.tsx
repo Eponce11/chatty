@@ -5,18 +5,14 @@ const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [login] = useLoginMutation();
+  const [login, { error }] = useLoginMutation();
 
   const handleLogin = async (
     e: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
     e.preventDefault();
-    try {
-      const userData = await login({ email, password }).unwrap();
-      console.log(userData);
-    } catch (err) {
-      console.log(err);
-    }
+    const loginCred = await login({ email, password }).unwrap();
+    console.log(loginCred);
   };
 
   return (

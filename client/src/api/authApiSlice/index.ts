@@ -1,28 +1,21 @@
 import { apiSlice } from "../apiSlice";
-import { LoginCredentials, LoginResponse } from "./types";
+import { LoginCredentials, LoginResponse, RegisterCredentials, RegisterResponse } from "./types";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    register: builder.mutation<any, any>({
-      query: (data: any) => ({
-        url: '/user/register',
-        method: 'POST',
-        body: { ...data }
+    register: builder.mutation<RegisterResponse, RegisterCredentials>({
+      query: (credentials: RegisterCredentials) => ({
+        url: "/user/register",
+        method: "POST",
+        body: { ...credentials },
       }),
-      transformResponse: (responseData: { data: any }) => {
-        return responseData.data
-      }
     }),
-
     login: builder.mutation<LoginResponse, LoginCredentials>({
       query: (credentials: LoginCredentials) => ({
         url: "/user/login",
         method: "POST",
         body: { ...credentials },
-      }),
-      transformResponse: (responseData: { data: LoginResponse }) => {
-        return responseData.data;
-      },
+      })
     }),
   }),
 });
