@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import connectToDB from "./config/mongoose.config";
 import userRoutes from "./routes/user.routes";
+import authRoutes from "./routes/auth.routes";
 
 const app: Application = express();
 const PORT: Number = 8000;
@@ -20,6 +21,7 @@ app.use(cors({ credentials: true, origin: "http://127.0.0.1:5173" }));
 connectToDB(DB);
 
 // connect to route files
+authRoutes(app);
 userRoutes(app);
 
 const server = app.listen(PORT, () =>
