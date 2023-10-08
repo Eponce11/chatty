@@ -7,7 +7,8 @@ interface User {
   email: string;
   password: string;
   username: string;
-  directMessages: Array<mongoose.Schema.Types.ObjectId>;
+  directMessages: mongoose.Schema.Types.ObjectId[];
+  refreshToken: string;
 }
 
 const UserSchema = new Schema<User>(
@@ -46,6 +47,9 @@ const UserSchema = new Schema<User>(
         ref: "User",
       },
     ],
+    refreshToken: {
+      type: String
+    }
   },
   { timestamps: true }
 );

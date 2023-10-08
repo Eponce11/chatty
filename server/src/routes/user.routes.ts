@@ -1,10 +1,10 @@
 import { Application } from "express";
-import { registerUser, loginUser, logoutUser } from "../controllers/user.controller";
+import { logoutUser, testFunc } from "../controllers/user.controller";
+import verifyJWT from "../middleware/verifyJWT.middleware";
 
 const userRoutes = (app: Application) => {
-  app.post("/api/user/register", registerUser);
-  app.post("/api/user/login", loginUser);
   app.get("/api/user/logout", logoutUser);
+  app.get("/api/user/test", verifyJWT, testFunc);
 };
 
 export default userRoutes;
