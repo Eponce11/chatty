@@ -44,6 +44,8 @@ export const register = asyncHandler(
           .cookie("jwt", refreshToken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
+            sameSite: "none",
+            secure: true,
           })
           .json({ accessToken });
       })
@@ -75,10 +77,57 @@ export const login = asyncHandler(
           .cookie("jwt", refreshToken, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
+            sameSite: "none",
+            secure: true,
           })
           .json({ accessToken });
       })
       .catch((err) => res.status(400).json({ err }));
+  }
+);
+
+export const handleRefreshToken = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(401);
+    const refreshToken = cookies.jwt;
+
+    const user = await User.findOne({ refreshToken });
+    if (!user) return res.sendStatus(403);
+    const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || null;
+    if (!refreshTokenSecret) return res.sendStatus(500);
+    jwt.verify(refreshToken, refreshTokenSecret, (err: any, decoded: any) => {
+      if (err || user.id !== decoded.id) return res.sendStatus(403);
+      const accessToken = generateToken({ id: user.id }, "access");
+      res.json({ accessToken });
+    });
+  }
+);
+
+export const logout = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.sendStatus(204);
+    const refreshToken = cookies.jwt;
+
+    const user = await User.findOne({ refreshToken });
+    if (!user) {
+      res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+      });
+      return res.sendStatus(204);
+    }
+
+    await User.findByIdAndUpdate(
+      { _id: user.id },
+      { refreshToken: "" },
+      { new: true }
+    );
+
+    res.clearCookie("jwt", { httpOnly: true, sameSite: "none", secure: true });
+    return res.sendStatus(204);
   }
 );
 
