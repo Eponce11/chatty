@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { useLoginMutation } from "../../api/authApiSlice";
+import { useAppDispatch } from "../../app/hooks";
+import { setCredentials } from "../../app/features/authSlice";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [login, { error }] = useLoginMutation();
+  const [login] = useLoginMutation();
+
+  const dispatch = useAppDispatch();
 
   const handleLogin = async (
     e: React.MouseEvent<HTMLElement>
@@ -13,6 +17,7 @@ const Login = () => {
     e.preventDefault();
     const loginCred = await login({ email, password }).unwrap();
     console.log(loginCred);
+    dispatch(setCredentials(loginCred));
   };
 
   return (
