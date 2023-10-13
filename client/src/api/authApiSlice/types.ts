@@ -5,7 +5,8 @@ export interface LoginCredentials {
 
 export interface LoginResponse {
   id: string;
-  username: String;
+  username: string;
+  token: string;
 }
 
 export interface RegisterCredentials {

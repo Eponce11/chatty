@@ -65,7 +65,6 @@ export const login = asyncHandler(
     const accessToken = generateToken({ id: user.id }, "access");
     const refreshToken = generateToken({ id: user.id }, "refresh");
     if (!accessToken || !refreshToken) return res.sendStatus(500);
-
     // set refresh token in db and respond with access token
     User.findByIdAndUpdate(
       { _id: user.id },
@@ -80,7 +79,7 @@ export const login = asyncHandler(
             sameSite: "none",
             secure: true,
           })
-          .json({ accessToken });
+          .json({ id: updatedUser?._id, username: updatedUser?.username, token: accessToken });
       })
       .catch((err) => res.status(400).json({ err }));
   }
@@ -91,7 +90,6 @@ export const handleRefreshToken = asyncHandler(
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(401);
     const refreshToken = cookies.jwt;
-
     const user = await User.findOne({ refreshToken });
     if (!user) return res.sendStatus(403);
     const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || null;
@@ -137,7 +135,7 @@ const generateToken = (payload: { id: String }, tokenType: String) => {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     if (!accessTokenSecret) return null;
     return jwt.sign({ id: payload.id }, accessTokenSecret, {
-      expiresIn: "30s",
+      expiresIn: "15m",
     });
   }
   if (tokenType === "refresh") {
