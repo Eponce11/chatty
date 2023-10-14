@@ -59,7 +59,7 @@ export const login = asyncHandler(
     const user = await User.findOne({ email });
     console.log(user);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).json({ error: "Invalid Credentials" });
+      return res.status(400).json({ error: " - Login or password is invalid." });
     }
 
     const accessToken = generateToken({ id: user.id }, "access");

@@ -15,7 +15,10 @@ export const authApiSlice = apiSlice.injectEndpoints({
         url: "/auth/login",
         method: "POST",
         body: { ...credentials },
-      })
+      }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return baseQueryReturnValue.data.error
+      },
     }),
   }),
 });

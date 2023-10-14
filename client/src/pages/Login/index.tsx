@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { useLoginMutation } from "../../api/authApiSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { setCredentials } from "../../app/features/authSlice";
@@ -7,9 +8,10 @@ const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const [login] = useLoginMutation();
+  const [login, { error }] = useLoginMutation();
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleLogin = async (
     e: React.MouseEvent<HTMLElement>
@@ -29,8 +31,17 @@ const Login = () => {
         <h3 className="text-center text-[#94999F] text-[16px] mb-3">
           We're so excited to see you again!
         </h3>
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          EMAIL OR PHONE NUMBER <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          EMAIL OR PHONE NUMBER
+          {!error ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">{error}</span>
+          )}
         </label>
         <input
           type="text"
@@ -40,8 +51,17 @@ const Login = () => {
           }
           value={email}
         />
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          PASSWORD <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          PASSWORD
+          {!error ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">{error}</span>
+          )}
         </label>
         <input
           type="text"
@@ -62,7 +82,9 @@ const Login = () => {
         </button>
         <span className="text-[#94999F] text-[13px]">
           Need an account?{" "}
-          <span className="text-[13px] text-[#069AE4]">Register</span>
+          <Link className="text-[13px] text-[#069AE4]" to="/register">
+            Register
+          </Link>
         </span>
       </div>
     </div>
