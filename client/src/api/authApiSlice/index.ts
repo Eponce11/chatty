@@ -9,6 +9,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...credentials },
       }),
+      transformErrorResponse(baseQueryReturnValue, meta, arg) {
+        return baseQueryReturnValue.data.error
+      },
     }),
     login: builder.mutation<LoginResponse, LoginCredentials>({
       query: (credentials: LoginCredentials) => ({

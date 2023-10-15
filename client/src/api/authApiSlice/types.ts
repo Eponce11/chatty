@@ -10,12 +10,10 @@ export interface LoginResponse {
 }
 
 export interface RegisterCredentials {
-  firstName: string;
-  lastName: string;
-  username: string;
+  
   email: string;
+  username: string;
   password: string;
-  confirmPassword: string;
 }
 
 export interface RegisterResponse {
