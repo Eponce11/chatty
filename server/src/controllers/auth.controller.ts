@@ -6,13 +6,8 @@ import User from "../models/user.model";
 
 export const register = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const { email, password, confirmPassword, username } = req.body;
+    const { email, username } = req.body;
     const errors: any = {};
-
-    if (password !== confirmPassword) {
-      errors.confirmPassword = { message: "must match password" };
-      return res.status(400).json({ errors });
-    }
 
     const potentialUser = await User.findOne({
       $or: [{ email: email }, { username: username }],
@@ -28,28 +23,36 @@ export const register = asyncHandler(
       return res.status(400).json({ errors });
     }
 
-    const newUser = await User.create(req.body);
+    User.create(req.body)
+      .then((newUser) => {
+        const accessToken = generateToken({ id: newUser.id }, "access");
+        const refreshToken = generateToken({ id: newUser.id }, "refresh");
+        if (!accessToken || !refreshToken) return res.sendStatus(500);
 
-    const accessToken = generateToken({ id: newUser.id }, "access");
-    const refreshToken = generateToken({ id: newUser.id }, "refresh");
-    if (!accessToken || !refreshToken) return res.sendStatus(500);
-
-    User.findByIdAndUpdate(
-      { _id: newUser.id },
-      { refreshToken: refreshToken },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        return res
-          .cookie("jwt", refreshToken, {
-            httpOnly: true,
-            maxAge: 24 * 60 * 60 * 1000,
-            sameSite: "none",
-            secure: true,
+        User.findByIdAndUpdate(
+          { _id: newUser.id },
+          { refreshToken: refreshToken },
+          { new: true }
+        )
+          .then((updatedUser) => {
+            return res
+              .cookie("jwt", refreshToken, {
+                httpOnly: true,
+                maxAge: 24 * 60 * 60 * 1000,
+                sameSite: "none",
+                secure: true,
+              })
+              .json({
+                id: updatedUser?._id,
+                username: updatedUser?.username,
+                token: accessToken,
+              });
           })
-          .json({ accessToken });
+          .catch((err) => res.status(400).json(err));
       })
-      .catch((err) => res.status(400).json({ err }));
+      .catch((err) => {
+        return res.status(400).json(err);
+      });
   }
 );
 
@@ -59,7 +62,9 @@ export const login = asyncHandler(
     const user = await User.findOne({ email });
     console.log(user);
     if (!user || !(await bcrypt.compare(password, user.password))) {
-      return res.status(400).json({ error: " - Login or password is invalid." });
+      return res
+        .status(400)
+        .json({ error: " - Login or password is invalid." });
     }
 
     const accessToken = generateToken({ id: user.id }, "access");
@@ -79,7 +84,11 @@ export const login = asyncHandler(
             sameSite: "none",
             secure: true,
           })
-          .json({ id: updatedUser?._id, username: updatedUser?.username, token: accessToken });
+          .json({
+            id: updatedUser?._id,
+            username: updatedUser?.username,
+            token: accessToken,
+          });
       })
       .catch((err) => res.status(400).json({ err }));
   }
