@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import { useRegisterMutation } from "../../api/authApiSlice";
 import { months, days, years } from "./constants";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState<any>({
@@ -11,6 +13,7 @@ const Register = () => {
     month: "",
     day: "",
   });
+  const [register, { error }] = useRegisterMutation();
 
   const { email, displayName, username, password, year, month, day } = formData;
 
@@ -30,15 +33,18 @@ const Register = () => {
     e: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
     e.preventDefault();
-    const DOB = `${month}-${day}-${year}`;
+    let dob = "";
+    if (month && day && year) dob = `${month}-${day}-${year}`;
+
     const sentData = {
       email,
       displayName,
       username,
       password,
-      DOB
-    }
-    console.log(sentData)
+      dob,
+    };
+    const returnData: any = await register(sentData);
+    console.log(returnData);
   };
 
   return (
@@ -47,8 +53,19 @@ const Register = () => {
         <h2 className="text-[#F2F3F5] text-center text-[22px] font-bold mb-3">
           Create an account
         </h2>
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          EMAIL <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error?.email ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          EMAIL
+          {!error?.email ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">
+              {` - ${error.email.message}`}
+            </span>
+          )}
         </label>
         <input
           type="text"
@@ -67,8 +84,19 @@ const Register = () => {
           onChange={handleOnChange}
           value={displayName}
         />
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          USERNAME <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error?.username ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          USERNAME
+          {!error?.username ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">
+              {` - ${error.username.message}`}
+            </span>
+          )}
         </label>
         <input
           type="text"
@@ -77,8 +105,19 @@ const Register = () => {
           onChange={handleOnChange}
           value={username}
         />
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          PASSWORD <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error?.password ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          PASSWORD
+          {!error?.password ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">
+              {` - ${error.password.message}`}
+            </span>
+          )}
         </label>
         <input
           type="text"
@@ -87,38 +126,52 @@ const Register = () => {
           onChange={handleOnChange}
           value={password}
         />
-        <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
-          DATE OF BIRTH <span className="text-[red]">*</span>
+        <label
+          className={`text-[${
+            !error?.dob ? "#B2B7BD" : "#F9767B"
+          }] text-[11px] tracking-wide font-bold`}
+        >
+          DATE OF BIRTH
+          {!error?.dob ? (
+            <span className="text-[red]"> *</span>
+          ) : (
+            <span className="text-[#F9767B] italic font-medium">
+              {` - ${error.dob.message}`}
+            </span>
+          )}
         </label>
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-1">
           <select
-            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px]"
+            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px] rounded-sm"
             name="month"
             onChange={handleOnChange}
             value={month}
           >
-            {months.map((month: string) => {
-              return <option>{month}</option>;
+            <option value="" disabled selected hidden>Month</option>
+            {months.map((month: string, idx: number) => {
+              return <option key={idx}>{month}</option>;
             })}
           </select>
           <select
-            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px]"
+            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px] rounded-sm"
             name="day"
             onChange={handleOnChange}
             value={day}
           >
-            {days.map((day: number) => {
-              return <option>{day}</option>;
+            <option value="" disabled selected hidden>Day</option>
+            {days.map((day: number, idx: number) => {
+              return <option key={idx}>{day}</option>;
             })}
           </select>
           <select
-            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px]"
+            className="bg-[#1E1F22] text-[#B2B7BD] h-[40px] w-[130px] rounded-sm"
             name="year"
             onChange={handleOnChange}
             value={year}
           >
-            {years.map((year: number) => {
-              return <option>{year}</option>;
+            <option value="" disabled selected hidden>Year</option>
+            {years.map((year: number, idx: number) => {
+              return <option key={idx}>{year}</option>;
             })}
           </select>
         </div>
@@ -134,9 +187,9 @@ const Register = () => {
           and
           <span className="text-[12px] text-[#069AE4]"> Privacy Policy</span>
         </span>
-        <span className="text-[12px] text-[#069AE4]">
-          Already have an account?
-        </span>
+        <p className="text-[14px] text-[#069AE4] mt-5">
+          <Link to="/login">Already have an account?</Link>
+        </p>
       </div>
     </div>
   );
