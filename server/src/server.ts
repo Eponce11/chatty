@@ -6,11 +6,11 @@ import cookieParser from "cookie-parser";
 import connectToDB from "./config/mongoose.config";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
+import messageRoutes from "./routes/message.routes";
 
 const app: Application = express();
 const PORT: Number = 8000;
 const DB: String = "Chatty_db";
-
 
 // middleware
 dotenv.config();
@@ -25,6 +25,7 @@ connectToDB(DB);
 // connect to route files
 authRoutes(app);
 userRoutes(app);
+messageRoutes(app);
 
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)

@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 interface Message {
   text: string;
-  receiver: mongoose.Schema.Types.ObjectId;
+  users: mongoose.Schema.Types.ObjectId[];
   sender: mongoose.Schema.Types.ObjectId;
 }
 
@@ -12,11 +12,13 @@ const MessageSchema = new Schema<Message>(
       type: String,
       required: true,
     },
-    receiver: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    users: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+    ],
     sender: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
