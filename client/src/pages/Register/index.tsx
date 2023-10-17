@@ -147,7 +147,7 @@ const Register = () => {
             onChange={handleOnChange}
             value={month}
           >
-            <option value="" disabled selected hidden>Month</option>
+            <option value="" disabled hidden>Month</option>
             {months.map((month: string, idx: number) => {
               return <option key={idx}>{month}</option>;
             })}
@@ -158,7 +158,7 @@ const Register = () => {
             onChange={handleOnChange}
             value={day}
           >
-            <option value="" disabled selected hidden>Day</option>
+            <option value="" disabled hidden>Day</option>
             {days.map((day: number, idx: number) => {
               return <option key={idx}>{day}</option>;
             })}
@@ -169,7 +169,7 @@ const Register = () => {
             onChange={handleOnChange}
             value={year}
           >
-            <option value="" disabled selected hidden>Year</option>
+            <option value="" disabled hidden>Year</option>
             {years.map((year: number, idx: number) => {
               return <option key={idx}>{year}</option>;
             })}
