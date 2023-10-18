@@ -7,6 +7,8 @@ import connectToDB from "./config/mongoose.config";
 import userRoutes from "./routes/user.routes";
 import authRoutes from "./routes/auth.routes";
 import messageRoutes from "./routes/message.routes";
+import dmRequestRoutes from "./routes/dmRequest.routes";
+import dmChatRoutes from "./routes/dmChat.routes";
 
 const app: Application = express();
 const PORT: Number = 8000;
@@ -26,6 +28,8 @@ connectToDB(DB);
 authRoutes(app);
 userRoutes(app);
 messageRoutes(app);
+dmRequestRoutes(app);
+dmChatRoutes(app);
 
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)
