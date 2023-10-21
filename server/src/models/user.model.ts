@@ -1,7 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-
-interface User {
+export interface User {
+  _id: mongoose.Schema.Types.ObjectId;
   email: string;
   password: string;
   displayName: string;
@@ -36,7 +36,7 @@ const UserSchema = new Schema<User>(
     },
     dob: {
       type: String,
-      required: [true, "is required"]
+      required: [true, "is required"],
     },
     directMessages: [
       {
@@ -45,8 +45,8 @@ const UserSchema = new Schema<User>(
       },
     ],
     refreshToken: {
-      type: String
-    }
+      type: String,
+    },
   },
   { timestamps: true }
 );
