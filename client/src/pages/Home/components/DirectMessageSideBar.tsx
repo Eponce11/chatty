@@ -1,8 +1,13 @@
 import { directMessageSideBarChannels } from "../constants";
 import { ChannelWrapper } from ".";
+import { useGetChatsQuery } from "../../../api/dmChatApiSlice";
+
 
 const DirectMessageSideBar = () => {
-  const tempData = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+  const { currentData, isFetching } = useGetChatsQuery(
+    "652e06270a3086842edac9de"
+  );
 
   return (
     <div className="h-full w-full bg-[#2B2D31]">
@@ -29,14 +34,19 @@ const DirectMessageSideBar = () => {
           <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default">
             DIRECT MESSAGES
           </span>
-          {tempData.map((data, idx) => {
-            return (
-              <li className="w-full h-[40px] mb-[2px] flex items-center px-2 rounded-sm hover:bg-[#34363b] hover:text-[white] cursor-pointer">
-                <div className="bg-[blue] h-[32px] aspect-square rounded-full mr-2"/>
-                <span>Username</span>
-              </li>
-            );
-          })}
+          {isFetching
+            ? null
+            : currentData.map((dmChat: any) => {
+                return (
+                  <li
+                    className="w-full h-[40px] mb-[2px] flex items-center px-2 rounded-sm hover:bg-[#34363b] hover:text-[white] cursor-pointer"
+                    key={dmChat.chatId}
+                  >
+                    <div className="bg-[blue] h-[32px] aspect-square rounded-full mr-2" />
+                    <span>{dmChat.username}</span>
+                  </li>
+                );
+              })}
         </ul>
       </div>
     </div>
