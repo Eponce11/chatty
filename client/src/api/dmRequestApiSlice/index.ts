@@ -10,7 +10,13 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         body: { ...data },
       }),
     }),
+    getDmRequests: builder.query<any, any>({
+      query: (id: string) => ({
+        url: `/dmRequest/getRequests/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateDmRequestMutation } = dmRequestApiSlice
+export const { useCreateDmRequestMutation, useGetDmRequestsQuery } = dmRequestApiSlice;
