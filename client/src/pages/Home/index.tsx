@@ -15,9 +15,9 @@ const Home = () => {
         <DirectMessageSideBar />
         <div className="w-full h-[53px] bg-[red] absolute bottom-0"></div>
       </div>
-      <div className="grow bg-[#313338] relative">
+      <div className="grow bg-[#313338]">
         
-        <MessageChannel />
+        <MessageRequestChannel />
         
       </div>
       

@@ -5,7 +5,7 @@ const MessageChannel = () => {
 
   return (
     <div className="w-full h-full relative">
-      <Header />
+      <Header title="Username" image="imgGoesHere"/>
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
