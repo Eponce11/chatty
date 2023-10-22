@@ -4,5 +4,6 @@ import ChannelWrapper from "./ChannelWrapper";
 import MessageChannel from "./MessageChannel";
 import Header from "./Header";
 import UserSidePanel from "./UserSidePanel";
+import MessageRequestChannel from "./MessageRequestChannel";
 
-export { ServerSelect, DirectMessageSideBar, ChannelWrapper, MessageChannel, Header, UserSidePanel };
+export { ServerSelect, DirectMessageSideBar, ChannelWrapper, MessageChannel, Header, UserSidePanel, MessageRequestChannel };
