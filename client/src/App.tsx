@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Landing, Login, Register, Home } from "./pages";
+import RequireAuth from "./common/components/RequireAuth";
 
 function App() {
   return (
@@ -10,7 +11,11 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="home" element={<Home />} />
+
+          <Route element={<RequireAuth />}>
+            <Route path="home" element={<Home />} />
+          </Route>
+          
         </Routes>
       </Router>
     </div>

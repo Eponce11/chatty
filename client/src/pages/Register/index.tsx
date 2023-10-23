@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useRegisterMutation } from "../../api/authApiSlice";
 import { months, days, years } from "./constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks";
+import { setCredentials } from "../../app/features/authSlice";
 
 const Register = () => {
   const [formData, setFormData] = useState<any>({
@@ -14,6 +16,8 @@ const Register = () => {
     day: "",
   });
   const [register, { error }] = useRegisterMutation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { email, displayName, username, password, year, month, day } = formData;
 
@@ -45,6 +49,8 @@ const Register = () => {
     };
     const returnData: any = await register(sentData);
     console.log(returnData);
+    dispatch(setCredentials(returnData));
+    navigate("/home")
   };
 
   return (
@@ -147,7 +153,9 @@ const Register = () => {
             onChange={handleOnChange}
             value={month}
           >
-            <option value="" disabled hidden>Month</option>
+            <option value="" disabled hidden>
+              Month
+            </option>
             {months.map((month: string, idx: number) => {
               return <option key={idx}>{month}</option>;
             })}
@@ -158,7 +166,9 @@ const Register = () => {
             onChange={handleOnChange}
             value={day}
           >
-            <option value="" disabled hidden>Day</option>
+            <option value="" disabled hidden>
+              Day
+            </option>
             {days.map((day: number, idx: number) => {
               return <option key={idx}>{day}</option>;
             })}
@@ -169,7 +179,9 @@ const Register = () => {
             onChange={handleOnChange}
             value={year}
           >
-            <option value="" disabled hidden>Year</option>
+            <option value="" disabled hidden>
+              Year
+            </option>
             {years.map((year: number, idx: number) => {
               return <option key={idx}>{year}</option>;
             })}

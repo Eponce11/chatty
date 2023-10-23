@@ -20,6 +20,7 @@ const Login = () => {
     const loginCred = await login({ email, password }).unwrap();
     console.log(loginCred);
     dispatch(setCredentials(loginCred));
+    navigate('/home')
   };
 
   return (
