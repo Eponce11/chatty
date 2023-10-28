@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { directMessageSideBarChannels } from "../constants";
 import { ChannelWrapper } from ".";
 import { useGetChatsQuery } from "../../../api/dmChatApiSlice";
@@ -8,6 +9,8 @@ const DirectMessageSideBar = () => {
   const { currentData, isFetching } = useGetChatsQuery(
     "652e06270a3086842edac9de"
   );
+
+  const navigate = useNavigate();
 
   return (
     <div className="h-full w-full bg-[#2B2D31]">
@@ -25,6 +28,7 @@ const DirectMessageSideBar = () => {
                 key={idx}
                 Icon={channel.icon}
                 label={channel.label}
+                route={channel.route}
               />
             );
           })}
@@ -41,6 +45,7 @@ const DirectMessageSideBar = () => {
                   <li
                     className="w-full h-[40px] mb-[2px] flex items-center px-2 rounded-sm hover:bg-[#34363b] hover:text-[white] cursor-pointer"
                     key={dmChat.chatId}
+                    onClick={() => navigate(`message/${dmChat.chatId}`)}
                   >
                     <div className="bg-[blue] h-[32px] aspect-square rounded-full mr-2" />
                     <span>{dmChat.username}</span>

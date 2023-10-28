@@ -7,6 +7,8 @@ import {
   MessageRequestChannel
 } from "./components";
 
+import { Route, Routes } from "react-router-dom";
+
 const Home = () => {
   return (
     <div className="h-full w-full bg-[#1E1F22] flex px-1">
@@ -17,8 +19,10 @@ const Home = () => {
       </div>
       <div className="grow bg-[#313338]">
         
-        <MessageRequestChannel />
-        
+        <Routes>
+          <Route path="/messageRequest" element={<MessageRequestChannel />}/>
+          <Route path="/message/:_id" element={<MessageChannel />}/>
+        </Routes>
       </div>
       
     </div>

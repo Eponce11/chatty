@@ -13,7 +13,7 @@ function App() {
           <Route path="/register" element={<Register />} />
 
           <Route element={<RequireAuth />}>
-            <Route path="home" element={<Home />} />
+            <Route path="home/*" element={<Home />} />
           </Route>
           
         </Routes>

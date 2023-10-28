@@ -4,10 +4,12 @@ const directMessageSideBarChannels = [
   {
     icon: UserSvg,
     label: "Friends",
+    route: "/home"
   },
   {
     icon: MessageSvg,
     label: "Message Requests",
+    route: "/home/messageRequest"
   },
 ];
 

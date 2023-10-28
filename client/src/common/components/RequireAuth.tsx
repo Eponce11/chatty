@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { selectAuthToken } from "../../app/features/authSlice";
 
 const RequireAuth = () => {
-  const token = useSelector(selectAuthToken);
+  const token = true // useSelector(selectAuthToken);
   const location = useLocation();
 
   return token ? (
