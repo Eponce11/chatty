@@ -44,14 +44,14 @@ const MessageRequestChannel = () => {
     <>
       {isFetchingPending
         ? null
-        : pendingCurrentData.map((dmRequest: any) => {
+        : pendingCurrentData.map((dmPending: any) => {
             return (
               <div
                 className="bg-[green] h-[75px] w-full px-3 py-4 flex"
-                key={dmRequest.dmRequestId}
+                key={dmPending.dmRequestId}
               >
                 <div className="h-full aspect-square rounded-full bg-[red] mr-3" />
-                <span>{dmRequest.username}</span>
+                <span>{dmPending.username}</span>
               </div>
             );
           })}
