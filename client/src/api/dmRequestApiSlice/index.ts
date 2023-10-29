@@ -16,7 +16,17 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getDmPending: builder.query<any, any>({
+      query: (id: string) => ({
+        url: `/dmRequest/getPending/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateDmRequestMutation, useGetDmRequestsQuery } = dmRequestApiSlice;
+export const {
+  useCreateDmRequestMutation,
+  useGetDmRequestsQuery,
+  useGetDmPendingQuery,
+} = dmRequestApiSlice;

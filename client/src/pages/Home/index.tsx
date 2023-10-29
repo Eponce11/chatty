@@ -20,7 +20,7 @@ const Home = () => {
       <div className="grow bg-[#313338]">
         
         <Routes>
-          <Route path="/messageRequest" element={<MessageRequestChannel />}/>
+          <Route path="/message-request" element={<MessageRequestChannel />}/>
           <Route path="/message/:_id" element={<MessageChannel />}/>
         </Routes>
       </div>

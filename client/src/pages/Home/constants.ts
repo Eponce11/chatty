@@ -9,7 +9,7 @@ const directMessageSideBarChannels = [
   {
     icon: MessageSvg,
     label: "Message Requests",
-    route: "/home/messageRequest"
+    route: "/home/message-request"
   },
 ];
 
