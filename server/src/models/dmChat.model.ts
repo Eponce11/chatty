@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 interface DmChat {
   users: mongoose.Schema.Types.ObjectId[];
-  messages: string[];
+  messages: mongoose.Schema.Types.ObjectId[];
 }
 
 const DmChatSchema = new Schema<DmChat>(
@@ -16,7 +16,9 @@ const DmChatSchema = new Schema<DmChat>(
     ],
     messages: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Message",
+        required: true,
       },
     ],
   },

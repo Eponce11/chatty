@@ -1,11 +1,30 @@
+import { useState } from "react";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
+import { useCreateMessageMutation } from "../../../api/messageApiSlice";
 import { Header, UserSidePanel } from ".";
 
 const MessageChannel = () => {
   const tempMessages = new Array(20).fill(0);
 
+  const [message, setMessage] = useState<string>("");
+  const [createMessage, { error }] = useCreateMessageMutation();
+  const id = useAppSelector(selectAuthId);
+  
+  const handleNewMessage = async (e:React.MouseEvent<HTMLElement>, toUserId: string) => {
+    e.preventDefault();
+    const data = {
+      to: toUserId,
+      from: id,
+      message: message
+    }
+
+    // const response = await createMessage(data)
+  }
+
   return (
     <div className="w-full h-full relative">
-      <Header title="Username" image="imgGoesHere"/>
+      <Header title="Username" image="imgGoesHere" />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
@@ -30,6 +49,10 @@ const MessageChannel = () => {
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
                 placeholder="Message @username"
+                value={message}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setMessage(e.target.value)
+                }
               />
               <div className="bg-[green] h-[24px] aspect-square ml-4" />
             </div>

@@ -1,9 +1,10 @@
 import { Application } from "express";
-import { createMessage } from "../controllers/message.controller";
+import { createMessage, getChatMessages } from "../controllers/message.controller";
 import verifyJWT from "../middleware/verifyJWT.middleware";
 
 const messageRoutes = (app: Application) => {
-  app.post("/api/message/create", verifyJWT, createMessage);
+  app.post("/api/message/create", createMessage);
+  app.get("/api/message/getChatMessage/:_id", getChatMessages)
 };
 
 export default messageRoutes;
