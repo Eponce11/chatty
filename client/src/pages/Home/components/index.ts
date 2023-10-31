@@ -5,5 +5,15 @@ import MessageChannel from "./MessageChannel";
 import Header from "./Header";
 import UserSidePanel from "./UserSidePanel";
 import MessageRequestChannel from "./MessageRequestChannel";
+import CreateDm from "./CreateDm";
 
-export { ServerSelect, DirectMessageSideBar, ChannelWrapper, MessageChannel, Header, UserSidePanel, MessageRequestChannel };
+export {
+  ServerSelect,
+  DirectMessageSideBar,
+  ChannelWrapper,
+  MessageChannel,
+  Header,
+  UserSidePanel,
+  MessageRequestChannel,
+  CreateDm,
+};

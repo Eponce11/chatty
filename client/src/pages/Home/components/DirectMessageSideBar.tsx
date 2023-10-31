@@ -1,10 +1,11 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { directMessageSideBarChannels } from "../constants";
-import { ChannelWrapper } from ".";
+import { ChannelWrapper, CreateDm } from ".";
 import { useGetChatsQuery } from "../../../api/dmChatApiSlice";
 
-
 const DirectMessageSideBar = () => {
+  const [isCreateDmOpen, setIsCreateDmOpen] = useState<boolean>(false);
 
   const { currentData, isFetching } = useGetChatsQuery(
     "652e06270a3086842edac9de"
@@ -35,8 +36,9 @@ const DirectMessageSideBar = () => {
         </ul>
 
         <ul className="w-full text-[#949BA0] mt-4">
-          <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default">
+          <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default relative" onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}>
             DIRECT MESSAGES
+          {isCreateDmOpen ? <CreateDm /> : null}
           </span>
           {isFetching
             ? null
