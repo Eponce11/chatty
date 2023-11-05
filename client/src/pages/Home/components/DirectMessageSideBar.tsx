@@ -38,7 +38,6 @@ const DirectMessageSideBar = () => {
         <ul className="w-full text-[#949BA0] mt-4">
           <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default relative" onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}>
             DIRECT MESSAGES
-          {isCreateDmOpen ? <CreateDm /> : null}
           </span>
           {isFetching
             ? null
@@ -55,6 +54,7 @@ const DirectMessageSideBar = () => {
                 );
               })}
         </ul>
+        {isCreateDmOpen ? <CreateDm /> : null}
       </div>
     </div>
   );
