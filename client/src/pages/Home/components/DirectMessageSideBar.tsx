@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { directMessageSideBarChannels } from "../constants";
 import { ChannelWrapper, CreateDm } from ".";
 import { useGetChatsQuery } from "../../../api/dmChatApiSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
 
 const DirectMessageSideBar = () => {
+  const id = useAppSelector(selectAuthId);
   const [isCreateDmOpen, setIsCreateDmOpen] = useState<boolean>(false);
 
-  const { currentData, isFetching } = useGetChatsQuery(
-    "652e06270a3086842edac9de"
-  );
+  const { currentData, isFetching } = useGetChatsQuery(id);
 
   const navigate = useNavigate();
 
@@ -36,7 +37,10 @@ const DirectMessageSideBar = () => {
         </ul>
 
         <ul className="w-full text-[#949BA0] mt-4">
-          <span className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default relative" onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}>
+          <span
+            className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default relative"
+            onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}
+          >
             DIRECT MESSAGES
           </span>
           {isFetching

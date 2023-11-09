@@ -9,7 +9,13 @@ export const dmChatApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getOneChat: builder.query<any, any>({
+      query: (id: string) => ({
+        url: `/dmChat/getOne/${id}`,
+        method: "GET"
+      })
+    })
   }),
 });
 
-export const { useGetChatsQuery } = dmChatApiSlice
+export const { useGetChatsQuery, useGetOneChatQuery } = dmChatApiSlice

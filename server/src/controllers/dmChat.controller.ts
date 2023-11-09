@@ -48,3 +48,14 @@ export const getDmChats = asyncHandler(
 
   }
 );
+
+export const getOneDmChat = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const _id = req.params._id
+
+    const dmChat = await DmChat.findById(_id)
+
+    console.log(dmChat)
+    return res.json(dmChat)
+  }
+)

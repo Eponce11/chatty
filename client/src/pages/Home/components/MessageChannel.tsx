@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
 import { useCreateMessageMutation } from "../../../api/messageApiSlice";
@@ -6,7 +7,7 @@ import { Header, UserSidePanel } from ".";
 
 const MessageChannel = () => {
   const tempMessages = new Array(20).fill(0);
-
+  const {_id } = useParams();
   const [message, setMessage] = useState<string>("");
   const [createMessage, { error }] = useCreateMessageMutation();
   const id = useAppSelector(selectAuthId);
@@ -21,6 +22,9 @@ const MessageChannel = () => {
 
     // const response = await createMessage(data)
   }
+
+  
+
 
   return (
     <div className="w-full h-full relative">
