@@ -7,7 +7,9 @@
     "start": "node build/server.js",
     "dev": "nodemon src/server.ts",
     "build": "tsc -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "",
@@ -19,7 +21,9 @@
     "@types/express": "^4.17.17",
     "@types/jsonwebtoken": "^9.0.3",
     "@types/node": "^20.6.3",
-    "typescript": "^5.2.2"
+    "@vitest/coverage-v8": "^0.34.6",
+    "typescript": "^5.2.2",
+    "vitest": "^0.34.6"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
