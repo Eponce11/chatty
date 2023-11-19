@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
-import multer from "multer";
 import { bucketName, s3 } from "../config/s3.config";
 import { PutObjectCommand, GetObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import asyncHandler from "express-async-handler";
 import crypto from "crypto";
 import sharp from "sharp";
-
-const storage = multer.memoryStorage();
-export const upload = multer({ storage });
 
 const randomImageName = (bytes: number = 32) =>
   crypto.randomBytes(bytes).toString("hex");
@@ -29,7 +25,7 @@ export const getImage = asyncHandler(
       user.imageUrl = url;
     }
 
-    res.json({ users })
+    res.json({ users });
   }
 );
 

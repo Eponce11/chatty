@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes";
 import messageRoutes from "./routes/message.routes";
 import dmRequestRoutes from "./routes/dmRequest.routes";
 import dmChatRoutes from "./routes/dmChat.routes";
+import s3Routes from "./routes/s3.routes";
 
 const app: Application = express();
 const PORT: Number = 8000;
@@ -30,6 +31,7 @@ userRoutes(app);
 messageRoutes(app);
 dmRequestRoutes(app);
 dmChatRoutes(app);
+s3Routes(app);
 
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)
