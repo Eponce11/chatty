@@ -10,6 +10,7 @@ import messageRoutes from "./routes/message.routes";
 import dmRequestRoutes from "./routes/dmRequest.routes";
 import dmChatRoutes from "./routes/dmChat.routes";
 import s3Routes from "./routes/s3.routes";
+import webSocket from "./webSocket";
 
 const app: Application = express();
 const PORT: Number = 8000;
@@ -36,5 +37,7 @@ s3Routes(app);
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)
 );
+
+webSocket(server);
 
 export { app };
