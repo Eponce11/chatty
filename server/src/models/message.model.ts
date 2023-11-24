@@ -1,6 +1,7 @@
 import mongoose, { Schema, model } from "mongoose";
 
 interface Message {
+  _id: mongoose.Schema.Types.ObjectId;
   text: string;
   users: mongoose.Schema.Types.ObjectId[];
   sender: mongoose.Schema.Types.ObjectId;
