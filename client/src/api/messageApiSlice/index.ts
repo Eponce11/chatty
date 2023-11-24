@@ -10,7 +10,13 @@ export const messageApiSlice = apiSlice.injectEndpoints({
         body: { ...data },
       }),
     }),
+    getChatMessages: builder.query<any, any>({
+      query: (data: any) => ({
+        url: `/message/getChatMessage/${data.chatId}/${data.userId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateMessageMutation } = messageApiSlice;
+export const { useCreateMessageMutation, useGetChatMessagesQuery } = messageApiSlice;

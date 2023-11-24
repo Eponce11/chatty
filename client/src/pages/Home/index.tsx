@@ -21,7 +21,7 @@ const Home = () => {
         
         <Routes>
           <Route path="/message-request" element={<MessageRequestChannel />}/>
-          <Route path="/message/:_id" element={<MessageChannel />}/>
+          <Route path="/message/:_chatId" element={<MessageChannel />}/>
         </Routes>
       </div>
       

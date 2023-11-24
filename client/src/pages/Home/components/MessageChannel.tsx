@@ -1,40 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
-import { useCreateMessageMutation } from "../../../api/messageApiSlice";
+import {
+  useCreateMessageMutation,
+  useGetChatMessagesQuery,
+} from "../../../api/messageApiSlice";
 import { Header, UserSidePanel } from ".";
 
 const MessageChannel = () => {
-  const tempMessages = new Array(20).fill(0);
-  const {_id } = useParams();
   const [message, setMessage] = useState<string>("");
   const [createMessage, { error }] = useCreateMessageMutation();
-  const id = useAppSelector(selectAuthId);
-  
-  const handleNewMessage = async (e:React.MouseEvent<HTMLElement>, toUserId: string) => {
+
+  const { _chatId } = useParams();
+  const userId = useAppSelector(selectAuthId);
+  const { currentData, isLoading } = useGetChatMessagesQuery({
+    chatId: _chatId,
+    userId: userId,
+  });
+
+  const handleNewMessage = async (
+    e: React.MouseEvent<HTMLElement>,
+  ) => {
     e.preventDefault();
+    if (!userId) return
     const data = {
-      to: toUserId,
-      from: id,
-      message: message
-    }
-
+      to: currentData.userId,
+      from: userId,
+      message: message,
+    };
+    const res = await createMessage(data).unwrap();
     // const response = await createMessage(data)
-  }
+  };
 
-  
-
-
-  return (
+  return isLoading ? null : (
     <div className="w-full h-full relative">
-      <Header title="Username" image="imgGoesHere" />
+      <Header title={`${currentData.username}`} image="imgGoesHere" />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
-            {tempMessages.map((message, idx) => {
+            {currentData.messages.map((message: any, idx: number) => {
               return (
-                <div className="flex">
+                <div className="flex" key={message.messageId}>
                   <div className="bg-[red] aspect-square h-[40px] rounded-full mr-3 mb-4" />
                   <div>
                     <span className="text-[#CBCBCE] font-semibold">
@@ -52,7 +59,7 @@ const MessageChannel = () => {
               <input
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
-                placeholder="Message @username"
+                placeholder={`Message @${currentData.username}`}
                 value={message}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setMessage(e.target.value)
