@@ -30,7 +30,7 @@ const MessageChannel = () => {
     username: "",
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
-  const [socket] = useState(() => io(':8000'))
+  const [socket] = useState(() => io(":8000"));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,8 +39,8 @@ const MessageChannel = () => {
           chatId: _chatId,
           from: userId,
         }).unwrap();
-        setChatInfo({ userId: res.userId, username: res.username});
-        setMessages([...res.messages])
+        setChatInfo({ userId: res.userId, username: res.username });
+        setMessages([...res.messages]);
         setIsLoading(false);
       } catch (err) {
         console.log(err);
@@ -51,18 +51,18 @@ const MessageChannel = () => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      socket.emit("add-user", userId)
-    })
-  }, [])
+      socket.emit("add-user", userId);
+    });
+  }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     if (socket) {
       socket.on("msg-receive", (messageData) => {
         setMessages((prev: NewMessageResponse[]) => [...prev, messageData]);
-        console.log(chatInfo)
-      })
+        console.log(chatInfo);
+      });
     }
-  }, [socket])
+  }, [socket]);
 
   const handleNewMessage = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -78,8 +78,8 @@ const MessageChannel = () => {
     socket.emit("send-msg", {
       messageId: res.messageId,
       to: chatInfo.userId,
-      message: res.text
-    })
+      message: res.text,
+    });
     console.log(res);
   };
 
@@ -91,15 +91,24 @@ const MessageChannel = () => {
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
             {messages.map((message: any, idx: number) => {
               return (
-                <div className="flex" key={message.messageId}>
-                  <div className="bg-[red] aspect-square h-[40px] rounded-full mr-3 mb-4" />
-                  <div>
-                    <span className="text-[#CBCBCE] font-semibold">
-                      {message.fromSelf ? username : chatInfo.username}
-                    </span>
-                    <p className="text-[#C1C5C7]">{message.text}</p>
-                  </div>
-                </div>
+                  idx !== 0 &&
+                  messages[idx - 1].fromSelf === message.fromSelf ? (
+                    <div className={`flex ${idx === messages.length - 1 ? "mb-3" : null }`} key={message.messageId}>
+                      <div className="w-[40px] rounded-full mr-3 mb-4" />
+                      <p className="text-[#C1C5C7]">{message.text}</p>
+                    </div>
+                  ) : (
+                    <div className={`flex mt-5 ${idx === messages.length - 1 ? "mb-5" : null }`} key={message.messageId}>
+                      <div className="bg-[red] aspect-square h-[40px] rounded-full mr-3" />
+                      <div>
+                        <span className="text-[#CBCBCE] font-semibold">
+                          {message.fromSelf ? username : chatInfo.username}
+                        </span>
+                        <p className="text-[#C1C5C7]">{message.text}</p>
+                      </div>
+                    </div>
+                  )
+                
               );
             })}
           </section>
