@@ -3,14 +3,14 @@ import { Server } from "socket.io";
 const webSocket = (httpServer: any): any => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://localhost:3000",
+      origin: "http://127.0.0.1:5173",
     },
   });
 
   const onlineUsers: Map<string, string> = new Map();
 
-  io.on("Connection", (socket) => {
-    // console.log(socket.id)
+  io.on("connection", (socket) => {
+    console.log(socket.id)
 
     // adds to list of online users
     socket.on("add-user", (userId: string) => {
@@ -20,7 +20,12 @@ const webSocket = (httpServer: any): any => {
     // send message to user
     socket.on("send-msg", (data: any) => {
       const sendUserSocket: any = onlineUsers.get(data.to);
-      socket.to(sendUserSocket).emit("msg-receive", data.message);
+      console.log(data)
+      socket.to(sendUserSocket).emit("msg-receive", {
+        messageId: data.messageId,
+        text: data.message,
+        fromSelf: false
+      });
     });
   });
 };
