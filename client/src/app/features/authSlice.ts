@@ -10,7 +10,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   id: "652e06990a3086842edac9e2",
-  username: null,
+  username: 'EricP',
   token: null,
 };
 
