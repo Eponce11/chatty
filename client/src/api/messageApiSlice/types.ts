@@ -6,5 +6,7 @@ export interface NewMessageData {
 }
 
 export interface NewMessageResponse {
-  message: string;
+  messageId: string;
+  text: string;
+  fromSelf: boolean;
 }

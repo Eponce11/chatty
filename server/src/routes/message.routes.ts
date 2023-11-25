@@ -4,7 +4,7 @@ import verifyJWT from "../middleware/verifyJWT.middleware";
 
 const messageRoutes = (app: Application) => {
   app.post("/api/message/create", createMessage);
-  app.get("/api/message/getChatMessage/:_chatId/:_from", getChatMessages)
+  app.post("/api/message/getChatMessages", getChatMessages)
 };
 
 export default messageRoutes;
