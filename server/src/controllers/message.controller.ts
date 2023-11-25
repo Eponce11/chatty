@@ -21,7 +21,11 @@ export const createMessage = asyncHandler(
       { $push: { messages: newMessage._id } }
     )
       .then((dmChat) => {
-        return res.json({ Msg: "Success" });
+        return res.json({
+          messageId: newMessage._id,
+          text: newMessage.text,
+          fromSelf: true,
+        });
       })
       .catch((err) => res.status(400).json({ err }));
   }
@@ -29,10 +33,9 @@ export const createMessage = asyncHandler(
 
 export const getChatMessages = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    
-    const { _chatId, _from } = req.params;
+    const { chatId, from } = req.body;
 
-    const dmChat = await DmChat.findById({ _id: _chatId })
+    const dmChat = await DmChat.findById({ _id: chatId })
       .populate<{
         messages: Message[];
       }>("messages")
@@ -42,13 +45,13 @@ export const getChatMessages = asyncHandler(
     if (!dmChat) return res.sendStatus(400);
 
     const [user1, user2] = dmChat.users;
-    const otherUser = user1._id.toString() === _from ? user2 : user1;
+    const otherUser = user1._id.toString() === from ? user2 : user1;
 
     const responseMessages = dmChat.messages.map((message) => {
       return {
         messageId: message._id,
         text: message.text,
-        fromSelf: message.sender.toString() === _from,
+        fromSelf: message.sender.toString() === from,
       };
     });
 
@@ -57,7 +60,7 @@ export const getChatMessages = asyncHandler(
       username: otherUser.username,
       messages: responseMessages,
     };
-    console.log(response);
+    // console.log(response);
     return res.json(response);
   }
 );
