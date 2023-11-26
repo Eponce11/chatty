@@ -14,6 +14,12 @@ export const dmChatApiSlice = apiSlice.injectEndpoints({
         url: `/dmChat/getOne/${id}`,
         method: "GET"
       })
+    }),
+    searchForChat: builder.query<any, any>({
+      query: (username: string) => ({
+        url: `/dmChat/search/${username}`,
+        method: "GET"
+      })
     })
   }),
 });

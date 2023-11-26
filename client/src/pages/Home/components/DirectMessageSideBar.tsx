@@ -58,7 +58,7 @@ const DirectMessageSideBar = () => {
                 );
               })}
         </ul>
-        {isCreateDmOpen ? <CreateDm /> : null}
+        {isCreateDmOpen ? <CreateDm chats={currentData}/> : null}
       </div>
     </div>
   );
