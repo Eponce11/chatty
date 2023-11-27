@@ -1,25 +1,34 @@
 import { useState } from "react";
+import StatusIcon from "./StatusIcon";
+import { useSearchUserByUsernameMutation } from "../../../api/userApiSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
 
 const CreateDm = (props: any) => {
   const { chats } = props;
+  const [searchUserByUsername] = useSearchUserByUsernameMutation();
 
-  const [searchUsername, setSearchUsername] = useState<string>('')
+  const userId = useAppSelector(selectAuthId);
+  const [searchUsername, setSearchUsername] = useState<string>("");
   const [userList, setUserList] = useState<any>(chats);
 
   const handleSearchUser = async (
     e: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
     e.preventDefault();
-    const searchedUser: any = userList.find((user: any) => user.username === searchUsername);
+    const searchedUser: any = userList.find(
+      (user: any) => user.username === searchUsername
+    );
     if (searchedUser) {
-      setUserList([searchedUser])
-      return
+      setUserList([searchedUser]);
+      return;
     }
-    try {
-
-    } catch (err) {
-      console.log(err)
-    }
+    const res: any = await searchUserByUsername({
+      username: searchUsername,
+      userId: userId,
+    }).unwrap();
+    setUserList([res]);
+    console.log(res);
   };
 
   return (
@@ -33,19 +42,27 @@ const CreateDm = (props: any) => {
             type="text"
             className="w-full bg-[#1E1F22] h-[34px] px-2 text-[15px] rounded-sm mt-3 text-[#F2F3F5] outline-none"
             placeholder="Type the username"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchUsername(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchUsername(e.target.value)
+            }
           />
         </div>
         <ul className="top-[90px]  w-full bottom-[55px] absolute overflow-y-auto">
-          {userList.map((chat: any, idx: number) => {
+          {userList.map((user: any, idx: number) => {
             return (
               <li
-                key={chat.chatId}
+                key={user.userId}
                 className="h-[42px] w-full flex items-center"
               >
                 <div className="bg-[red] aspect-square h-[32px] rounded-full mr-3" />
-                <span className="text-white">{chat.username}</span>
-                <div className="justify-self-end aspect-square bg-[blue] h-4" />
+                <span className="text-white">{user.username}</span>
+                <StatusIcon
+                  status={user.status}
+                  chatId={user.chatId ? user.chatId : null}
+                  userId={user.userId}
+                  userList={userList}
+                  setUserList={setUserList}
+                />
               </li>
             );
           })}
