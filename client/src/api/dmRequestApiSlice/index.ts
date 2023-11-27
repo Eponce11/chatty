@@ -22,6 +22,13 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    acceptDmRequest: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: "/dmRequest/accept",
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
@@ -29,4 +36,5 @@ export const {
   useCreateDmRequestMutation,
   useGetDmRequestsQuery,
   useGetDmPendingQuery,
+  useAcceptDmRequestMutation,
 } = dmRequestApiSlice;

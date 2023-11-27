@@ -1,7 +1,7 @@
 
 export interface NewDmRequestData {
   to: string;
-  from: string;
+  from: string | null;
 }
 
 export interface NewDmRequestResponse {

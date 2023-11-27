@@ -1,6 +1,5 @@
 import { apiSlice } from "../apiSlice";
 
-
 export const dmChatApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getChats: builder.query<any, any>({
@@ -12,16 +11,10 @@ export const dmChatApiSlice = apiSlice.injectEndpoints({
     getOneChat: builder.query<any, any>({
       query: (id: string) => ({
         url: `/dmChat/getOne/${id}`,
-        method: "GET"
-      })
+        method: "GET",
+      }),
     }),
-    searchForChat: builder.query<any, any>({
-      query: (username: string) => ({
-        url: `/dmChat/search/${username}`,
-        method: "GET"
-      })
-    })
   }),
 });
 
-export const { useGetChatsQuery, useGetOneChatQuery } = dmChatApiSlice
+export const { useGetChatsQuery, useGetOneChatQuery } = dmChatApiSlice;
