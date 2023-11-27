@@ -41,6 +41,7 @@ export const getDmChats = asyncHandler(
         chatId: dmChat._id,
         userId: otherUser._id,
         username: otherUser.username,
+        status: "EXIST"
       }
     });
 
