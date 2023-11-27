@@ -1,12 +1,31 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import DmRequest from "../models/dmRequest.model";
-
+import DmChat from "../models/dmChat.model";
 import { User } from "../models/user.model";
 
 export const createDmRequest = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { from, to } = req.body;
+
+    if (from === to) return res.status(400).json({ error: "Cannot Add Self" })
+
+    const chatExists = await DmChat.findOne({
+      users: {
+        $all: [from, to],
+      },
+    });
+
+    if (chatExists) return res.status(400).json({ error: "Chat Exists" });
+
+    const requestExists = await DmRequest.findOne({
+      $or: [
+        { sender: to, receiver: from },
+        { sender: from, receiver: to },
+      ],
+    });
+
+    if (requestExists) return res.status(400).json({ error: "Request Exists" });
 
     DmRequest.create({
       receiver: to,
@@ -64,6 +83,30 @@ export const getDmPending = asyncHandler(
         username: receiver.username,
       };
     });
-    return res.json(response)
+    return res.json(response);
+  }
+);
+
+export const acceptDmRequest = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { from, to } = req.body;
+
+    const deletedRequest = await DmRequest.deleteOne({
+      sender: from,
+      receiver: to,
+    });
+
+    if (!deletedRequest) return res.sendStatus(400);
+
+    DmChat.create({
+      users: [from, to],
+    })
+      .then((newDmChat) => {
+        return res.json(newDmChat);
+      })
+      .catch((err) => {
+        console.log(err._message);
+        return res.sendStatus(400);
+      });
   }
 );
