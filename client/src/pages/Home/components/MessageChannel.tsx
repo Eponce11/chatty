@@ -47,7 +47,7 @@ const MessageChannel = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [_chatId]);
 
   useEffect(() => {
     socket.on("connect", () => {
