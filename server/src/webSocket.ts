@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 const webSocket = (httpServer: any): any => {
   const io = new Server(httpServer, {
     cors: {
-      origin: "http://127.0.0.1:5173",
+      origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
     },
   });
 
