@@ -1,3 +1,4 @@
 import UserSvg from "./UserSvg";
 import MessageSvg from "./MessageSvg";
-export { UserSvg, MessageSvg };
+import SettingSvg from "./SettingSvg";
+export { UserSvg, MessageSvg, SettingSvg };

@@ -4,14 +4,14 @@ import {
   MessageChannel,
   Header,
   UserSidePanel,
-  MessageRequestChannel
+  MessageRequestChannel,
 } from "./components";
 import { useAppSelector } from "../../app/hooks";
 import { selectAuthUsername } from "../../app/features/authSlice";
 import { Route, Routes } from "react-router-dom";
+import { SettingSvg } from "../../common/static/svg";
 
 const Home = () => {
-
   const username = useAppSelector(selectAuthUsername);
 
   return (
@@ -23,19 +23,16 @@ const Home = () => {
           <div className="flex items-center">
             <div className="bg-[blue] h-[32px] aspect-square rounded-full text-white mr-2" />
             <span className="text-white">{username}</span>
-
           </div>
-          <div className="bg-[green] h-5 aspect-square " />
+          <SettingSvg />
         </div>
       </div>
       <div className="grow bg-[#313338]">
-        
         <Routes>
-          <Route path="/message-request" element={<MessageRequestChannel />}/>
-          <Route path="/message/:_chatId" element={<MessageChannel />}/>
+          <Route path="/message-request" element={<MessageRequestChannel />} />
+          <Route path="/message/:_chatId" element={<MessageChannel />} />
         </Routes>
       </div>
-      
     </div>
   );
 };
