@@ -1,5 +1,5 @@
 const ServerSelect = () => {
-  const tempServers = [0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  const tempServers = [0, 0, 0, 0, 0,0];
 
   return (
     <div className="h-full w-[72px] flex justify-center overflow-x-auto">
