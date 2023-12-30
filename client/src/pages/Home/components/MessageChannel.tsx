@@ -9,6 +9,7 @@ import {
   useCreateMessageMutation,
   useGetChatMessagesMutation,
 } from "../../../api/messageApiSlice";
+import { SendSvg, AddSvg } from "../../../common/static/svg";
 import { Header, UserSidePanel } from ".";
 import { NewMessageResponse } from "../../../api/messageApiSlice/types";
 import { io } from "socket.io-client";
@@ -114,7 +115,7 @@ const MessageChannel = () => {
           </section>
           <section className="h-[68px] w-full px-3 bottom-0 absolute">
             <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
-              <div className="bg-[green] h-[24px] aspect-square mr-4" />
+              <AddSvg />
               <input
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
@@ -124,10 +125,7 @@ const MessageChannel = () => {
                   setMessage(e.target.value)
                 }
               />
-              <div
-                className="bg-[green] h-[24px] aspect-square ml-4"
-                onClick={handleNewMessage}
-              />
+              <SendSvg handleNewMessage={handleNewMessage}/>
             </div>
           </section>
         </div>
