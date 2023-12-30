@@ -3,6 +3,12 @@ import {
   useCreateDmRequestMutation,
   useAcceptDmRequestMutation,
 } from "../../../api/dmRequestApiSlice";
+import {
+  ChatSvg,
+  AcceptSvg,
+  AddUserSvg,
+  PendingSvg,
+} from "../../../common/static/svg";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
 
@@ -38,41 +44,18 @@ const StatusIcon = (props: any) => {
     console.log(res);
   };
 
-  let Content;
-
-  switch (status) {
-    case "EXIST":
-      Content = (
-        <div
-          className="justify-self-end aspect-square bg-[blue] h-4"
-          onClick={() => navigate(`/home/message/${chatId}`)}
-        />
-      );
-      break;
-    case "PENDING":
-      Content = (
-        <div className="justify-self-end aspect-square bg-[green] h-4" />
-      );
-      break;
-    case "REQUEST":
-      Content = (
-        <div
-          className="justify-self-end aspect-square bg-[red] h-4"
-          onClick={handleAcceptRequest}
-        />
-      );
-      break;
-    case "NONE":
-      Content = (
-        <div
-          className="justify-self-end aspect-square bg-[yellow] h-4"
-          onClick={handleSendDmRequest}
-        />
-      );
-      break;
-  }
-
-  return Content;
+  return (
+    <>
+      {status === "EXIST" && <ChatSvg chatId={chatId} />}
+      {status === "PENDING" && <PendingSvg />}
+      {status === "REQUEST" && (
+        <AcceptSvg handleAcceptRequest={handleAcceptRequest} />
+      )}
+      {status === "NONE" && (
+        <AddUserSvg handleSendDmRequest={handleSendDmRequest} />
+      )}
+    </>
+  );
 };
 
 export default StatusIcon;

@@ -52,10 +52,12 @@ const CreateDm = (props: any) => {
             return (
               <li
                 key={user.userId}
-                className="h-[42px] w-full flex items-center"
+                className="h-[42px] w-full flex items-center justify-between"
               >
-                <div className="bg-[red] aspect-square h-[32px] rounded-full mr-3" />
-                <span className="text-white">{user.username}</span>
+                <div className="flex items-center">
+                  <div className="bg-[red] aspect-square h-[32px] rounded-full mr-3" />
+                  <span className="text-white">{user.username}</span>
+                </div>
                 <StatusIcon
                   status={user.status}
                   chatId={user.chatId ? user.chatId : null}
