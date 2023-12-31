@@ -59,6 +59,7 @@ export const getChatMessages = asyncHandler(
       userId: otherUser._id,
       username: otherUser.username,
       messages: responseMessages,
+      userProfilePicture: otherUser.profilePicture,
     };
     // console.log(response);
     return res.json(response);

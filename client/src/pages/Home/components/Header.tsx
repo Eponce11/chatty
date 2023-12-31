@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-
+import { DefaultProfileSvg } from "../../../common/static/svg";
 interface HeaderProps {
   title: string;
   Icon?: (props: any) => JSX.Element;
@@ -14,9 +14,9 @@ const Header = (props: PropsWithChildren<HeaderProps>) => {
       <div className="w-full h-[28px] flex text-[white] items-center">
         {Icon ? (
           <Icon />
-        ) : image ? (
+        ) : image !== null ? (
           <div className="h-full aspect-square rounded-full bg-[blue] mr-2" />
-        ) : null}
+        ) : <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />}
         <span className="ml-2 font-semibold pr-4 mr-4 border-r-[1px] border-[#3F4147]">{title}</span>
         {children}
       </div>

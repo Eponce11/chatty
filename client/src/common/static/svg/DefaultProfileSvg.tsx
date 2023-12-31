@@ -1,6 +1,7 @@
-const DefaultProfileSvg = () => {
+const DefaultProfileSvg = (props: any) => {
+  const { className } = props;
   return (
-    <div className="w-[35px] h-[35px] mr-2">
+    <div className={className}>
       <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
         <g
@@ -30,3 +31,7 @@ const DefaultProfileSvg = () => {
 };
 
 export default DefaultProfileSvg;
+
+/*
+"w-[35px] h-[35px] mr-2"
+*/

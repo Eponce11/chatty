@@ -25,7 +25,7 @@ const Home = () => {
         <DirectMessageSideBar />
         <div className="w-full h-[53px] bg-[#232428] absolute bottom-0 flex items-center p-2 justify-between">
           <div className="flex items-center">
-            {profilePicture ? <></> : <DefaultProfileSvg />}
+            {profilePicture ? <></> : <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />}
             <span className="text-white">{username}</span>
           </div>
           <SettingSvg />

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { directMessageSideBarChannels } from "../constants";
+import { DefaultProfileSvg } from "../../../common/static/svg";
 import { ChannelWrapper, CreateDm } from ".";
 import { useGetChatsQuery } from "../../../api/dmChatApiSlice";
 import { useAppSelector } from "../../../app/hooks";
@@ -52,13 +53,17 @@ const DirectMessageSideBar = () => {
                     key={dmChat.chatId}
                     onClick={() => navigate(`message/${dmChat.chatId}`)}
                   >
-                    <div className="bg-[blue] h-[32px] aspect-square rounded-full mr-2" />
+                    {dmChat.userProfilePicture ? (
+                      <></>
+                    ) : (
+                      <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />
+                    )}
                     <span>{dmChat.username}</span>
                   </li>
                 );
               })}
         </ul>
-        {isCreateDmOpen ? <CreateDm chats={currentData}/> : null}
+        {isCreateDmOpen ? <CreateDm chats={currentData} /> : null}
       </div>
     </div>
   );

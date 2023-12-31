@@ -9,13 +9,14 @@ import {
   useCreateMessageMutation,
   useGetChatMessagesMutation,
 } from "../../../api/messageApiSlice";
-import { SendSvg, AddSvg } from "../../../common/static/svg";
+import { SendSvg, AddSvg, DefaultProfileSvg } from "../../../common/static/svg";
 import { Header, UserSidePanel } from ".";
 import { NewMessageResponse } from "../../../api/messageApiSlice/types";
 import { io } from "socket.io-client";
 interface ChatInfo {
   userId: string;
   username: string;
+  userProfilePicture: string | null;
 }
 
 const MessageChannel = () => {
@@ -29,6 +30,7 @@ const MessageChannel = () => {
   const [chatInfo, setChatInfo] = useState<ChatInfo>({
     userId: "",
     username: "",
+    userProfilePicture: null
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
   const [socket] = useState(() => io(":8000"));
@@ -40,7 +42,7 @@ const MessageChannel = () => {
           chatId: _chatId,
           from: userId,
         }).unwrap();
-        setChatInfo({ userId: res.userId, username: res.username });
+        setChatInfo({ userId: res.userId, username: res.username, userProfilePicture: res.userProfilePicture });
         setMessages([...res.messages]);
         setIsLoading(false);
       } catch (err) {
@@ -86,7 +88,7 @@ const MessageChannel = () => {
 
   return isLoading ? null : (
     <div className="w-full h-full relative">
-      <Header title={`${chatInfo.username}`} image="imgGoesHere" />
+      <Header title={`${chatInfo.username}`} image={chatInfo.userProfilePicture} />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
@@ -100,7 +102,7 @@ const MessageChannel = () => {
                     </div>
                   ) : (
                     <div className={`flex mt-5 ${idx === messages.length - 1 ? "mb-5" : null }`} key={message.messageId}>
-                      <div className="bg-[red] aspect-square h-[40px] rounded-full mr-3" />
+                      <DefaultProfileSvg className="w-[40px] h-[40px] mr-3" />
                       <div>
                         <span className="text-[#CBCBCE] font-semibold">
                           {message.fromSelf ? username : chatInfo.username}

@@ -15,6 +15,7 @@ export interface RegisterCredentials {
   username: string;
   password: string;
   dob: string;
+  profilePicture: string | null;
 }
 
 export interface RegisterResponse {

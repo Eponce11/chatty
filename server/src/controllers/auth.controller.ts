@@ -46,6 +46,7 @@ export const register = asyncHandler(
                 id: updatedUser?._id,
                 username: updatedUser?.username,
                 token: accessToken,
+                profilePicture: updatedUser?.profilePicture,
               });
           })
           .catch((err) => res.status(400).json(err));
@@ -88,6 +89,7 @@ export const login = asyncHandler(
             id: updatedUser?._id,
             username: updatedUser?.username,
             token: accessToken,
+            profilePicture: updatedUser?.profilePicture,
           });
       })
       .catch((err) => res.status(400).json({ err }));

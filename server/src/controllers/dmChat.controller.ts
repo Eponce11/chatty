@@ -35,28 +35,28 @@ export const getDmChats = asyncHandler(
 
     const response = dmChats.map((dmChat) => {
       const [user1, user2] = dmChat.users;
-      const otherUser = user1._id.toString() === _id ? user2 : user1
+      const otherUser = user1._id.toString() === _id ? user2 : user1;
 
       return {
         chatId: dmChat._id,
         userId: otherUser._id,
         username: otherUser.username,
-        status: "EXIST"
-      }
+        status: "EXIST",
+        userProfilePicture: otherUser.profilePicture,
+      };
     });
 
-    return res.json(response)
-
+    return res.json(response);
   }
 );
 
 export const getOneDmChat = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const _id = req.params._id
+    const _id = req.params._id;
 
-    const dmChat = await DmChat.findById(_id)
+    const dmChat = await DmChat.findById(_id);
 
-    console.log(dmChat)
-    return res.json(dmChat)
+    console.log(dmChat);
+    return res.json(dmChat);
   }
-)
+);

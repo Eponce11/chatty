@@ -9,6 +9,7 @@ export interface User {
   dob: string;
   directMessages: mongoose.Schema.Types.ObjectId[];
   refreshToken: string;
+  profilePicture: string | null;
 }
 
 const UserSchema = new Schema<User>(
@@ -46,6 +47,10 @@ const UserSchema = new Schema<User>(
     ],
     refreshToken: {
       type: String,
+    },
+    profilePicture: {
+      type: String || null,
+      required: true,
     },
   },
   { timestamps: true }

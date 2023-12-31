@@ -46,6 +46,7 @@ const Register = () => {
       username,
       password,
       dob,
+      profilePicture: null,
     };
     const returnData: any = await register(sentData);
     console.log(returnData);
