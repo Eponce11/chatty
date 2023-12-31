@@ -7,12 +7,16 @@ import {
   MessageRequestChannel,
 } from "./components";
 import { useAppSelector } from "../../app/hooks";
-import { selectAuthUsername } from "../../app/features/authSlice";
+import {
+  selectAuthUsername,
+  selectAuthProfilePicture,
+} from "../../app/features/authSlice";
 import { Route, Routes } from "react-router-dom";
-import { SettingSvg } from "../../common/static/svg";
+import { SettingSvg, DefaultProfileSvg } from "../../common/static/svg";
 
 const Home = () => {
   const username = useAppSelector(selectAuthUsername);
+  const profilePicture = useAppSelector(selectAuthProfilePicture);
 
   return (
     <div className="h-full w-full bg-[#1E1F22] flex px-1">
@@ -21,7 +25,7 @@ const Home = () => {
         <DirectMessageSideBar />
         <div className="w-full h-[53px] bg-[#232428] absolute bottom-0 flex items-center p-2 justify-between">
           <div className="flex items-center">
-            <div className="bg-[blue] h-[32px] aspect-square rounded-full text-white mr-2" />
+            {profilePicture ? <></> : <DefaultProfileSvg />}
             <span className="text-white">{username}</span>
           </div>
           <SettingSvg />
