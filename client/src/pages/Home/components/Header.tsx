@@ -15,7 +15,7 @@ const Header = (props: PropsWithChildren<HeaderProps>) => {
         {Icon ? (
           <Icon />
         ) : image !== null ? (
-          <div className="h-full aspect-square rounded-full bg-[blue] mr-2" />
+          <img src={image} alt="profilePicture" className="h-full aspect-square rounded-full mr-2"/>
         ) : <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />}
         <span className="ml-2 font-semibold pr-4 mr-4 border-r-[1px] border-[#3F4147]">{title}</span>
         {children}

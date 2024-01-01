@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import Message from "../models/message.model";
 import DmChat from "../models/dmChat.model";
+import { getImage } from "./s3.controller";
 import { User } from "../models/user.model";
 
 export const createMessage = asyncHandler(
@@ -55,11 +56,16 @@ export const getChatMessages = asyncHandler(
       };
     });
 
+    const profilePic =
+      otherUser.profilePicture === null
+        ? otherUser.profilePicture
+        : await getImage(otherUser.profilePicture);
+
     const response = {
       userId: otherUser._id,
       username: otherUser.username,
       messages: responseMessages,
-      userProfilePicture: otherUser.profilePicture,
+      userProfilePicture: profilePic,
     };
     // console.log(response);
     return res.json(response);

@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../app/hooks";
 import {
   selectAuthId,
   selectAuthUsername,
+  selectAuthProfilePicture,
 } from "../../../app/features/authSlice";
 import {
   useCreateMessageMutation,
@@ -25,12 +26,13 @@ const MessageChannel = () => {
   const { _chatId } = useParams();
   const userId = useAppSelector(selectAuthId);
   const username = useAppSelector(selectAuthUsername);
+  const profilePicture = useAppSelector(selectAuthProfilePicture);
   const [getChatMessages] = useGetChatMessagesMutation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [chatInfo, setChatInfo] = useState<ChatInfo>({
     userId: "",
     username: "",
-    userProfilePicture: null
+    userProfilePicture: null,
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
   const [socket] = useState(() => io(":8000"));
@@ -42,7 +44,12 @@ const MessageChannel = () => {
           chatId: _chatId,
           from: userId,
         }).unwrap();
-        setChatInfo({ userId: res.userId, username: res.username, userProfilePicture: res.userProfilePicture });
+        console.log(res);
+        setChatInfo({
+          userId: res.userId,
+          username: res.username,
+          userProfilePicture: res.userProfilePicture,
+        });
         setMessages([...res.messages]);
         setIsLoading(false);
       } catch (err) {
@@ -88,30 +95,58 @@ const MessageChannel = () => {
 
   return isLoading ? null : (
     <div className="w-full h-full relative">
-      <Header title={`${chatInfo.username}`} image={chatInfo.userProfilePicture} />
+      <Header
+        title={`${chatInfo.username}`}
+        image={chatInfo.userProfilePicture}
+      />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
             {messages.map((message: any, idx: number) => {
-              return (
-                  idx !== 0 &&
-                  messages[idx - 1].fromSelf === message.fromSelf ? (
-                    <div className={`flex ${idx === messages.length - 1 ? "mb-3" : null }`} key={message.messageId}>
-                      <div className="w-[40px] rounded-full mr-3 mb-4" />
-                      <p className="text-[#C1C5C7]">{message.text}</p>
-                    </div>
-                  ) : (
-                    <div className={`flex mt-5 ${idx === messages.length - 1 ? "mb-5" : null }`} key={message.messageId}>
+              return idx !== 0 &&
+                messages[idx - 1].fromSelf === message.fromSelf ? (
+                <div
+                  className={`flex ${
+                    idx === messages.length - 1 ? "mb-3" : null
+                  }`}
+                  key={message.messageId}
+                >
+                  <div className="w-[40px] rounded-full mr-3 mb-4" />
+                  <p className="text-[#C1C5C7]">{message.text}</p>
+                </div>
+              ) : (
+                <div
+                  className={`flex mt-5 ${
+                    idx === messages.length - 1 ? "mb-5" : null
+                  }`}
+                  key={message.messageId}
+                >
+                  {message.fromSelf ? (
+                    profilePicture === null ? (
                       <DefaultProfileSvg className="w-[40px] h-[40px] mr-3" />
-                      <div>
-                        <span className="text-[#CBCBCE] font-semibold">
-                          {message.fromSelf ? username : chatInfo.username}
-                        </span>
-                        <p className="text-[#C1C5C7]">{message.text}</p>
-                      </div>
-                    </div>
-                  )
-                
+                    ) : (
+                      <img
+                        src={profilePicture}
+                        alt="profile picture"
+                        className="w-[40px] h-[40px] mr-3 rounded-full"
+                      />
+                    )
+                  ) : chatInfo.userProfilePicture === null ? (
+                    <DefaultProfileSvg className="w-[40px] h-[40px] mr-3" />
+                  ) : (
+                    <img
+                      src={chatInfo.userProfilePicture}
+                      alt="profile picture"
+                      className="w-[40px] h-[40px] mr-3 rounded-full"
+                    />
+                  )}
+                  <div>
+                    <span className="text-[#CBCBCE] font-semibold">
+                      {message.fromSelf ? username : chatInfo.username}
+                    </span>
+                    <p className="text-[#C1C5C7]">{message.text}</p>
+                  </div>
+                </div>
               );
             })}
           </section>
@@ -127,7 +162,7 @@ const MessageChannel = () => {
                   setMessage(e.target.value)
                 }
               />
-              <SendSvg handleNewMessage={handleNewMessage}/>
+              <SendSvg handleNewMessage={handleNewMessage} />
             </div>
           </section>
         </div>

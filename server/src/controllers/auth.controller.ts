@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
+import { getImage } from "./s3.controller";
 import User from "../models/user.model";
 
 export const register = asyncHandler(
@@ -77,7 +78,12 @@ export const login = asyncHandler(
       { refreshToken: refreshToken },
       { new: true }
     )
-      .then((updatedUser) => {
+      .then(async (updatedUser) => {
+        const profilePic =
+          typeof updatedUser?.profilePicture === "string"
+            ? await getImage(updatedUser?.profilePicture)
+            : updatedUser?.profilePicture;
+
         return res
           .cookie("jwt", refreshToken, {
             httpOnly: true,
@@ -89,7 +95,7 @@ export const login = asyncHandler(
             id: updatedUser?._id,
             username: updatedUser?.username,
             token: accessToken,
-            profilePicture: updatedUser?.profilePicture,
+            profilePicture: profilePic,
           });
       })
       .catch((err) => res.status(400).json({ err }));

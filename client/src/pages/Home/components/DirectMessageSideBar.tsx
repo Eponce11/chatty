@@ -54,7 +54,7 @@ const DirectMessageSideBar = () => {
                     onClick={() => navigate(`message/${dmChat.chatId}`)}
                   >
                     {dmChat.userProfilePicture ? (
-                      <></>
+                      <img src={dmChat.userProfilePicture} alt="profilePicture" className="w-[35px] h-[35px] mr-2 rounded-full"/>
                     ) : (
                       <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />
                     )}

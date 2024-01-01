@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import DmChat from "../models/dmChat.model";
-
+import { getImage } from "./s3.controller";
 import { User } from "../models/user.model";
 
 export const createDmChat = asyncHandler(
@@ -33,19 +33,25 @@ export const getDmChats = asyncHandler(
 
     if (!dmChats) return res.sendStatus(400);
 
-    const response = dmChats.map((dmChat) => {
-      const [user1, user2] = dmChat.users;
-      const otherUser = user1._id.toString() === _id ? user2 : user1;
+    const response = await Promise.all(
+      dmChats.map(async (dmChat) => {
+        const [user1, user2] = dmChat.users;
+        const otherUser = user1._id.toString() === _id ? user2 : user1;
 
-      return {
-        chatId: dmChat._id,
-        userId: otherUser._id,
-        username: otherUser.username,
-        status: "EXIST",
-        userProfilePicture: otherUser.profilePicture,
-      };
-    });
+        const profilePic =
+          otherUser.profilePicture === null
+            ? otherUser.profilePicture
+            : await getImage(otherUser.profilePicture);
 
+        return {
+          chatId: dmChat._id,
+          userId: otherUser._id,
+          username: otherUser.username,
+          status: "EXIST",
+          userProfilePicture: profilePic,
+        };
+      })
+    );
     return res.json(response);
   }
 );

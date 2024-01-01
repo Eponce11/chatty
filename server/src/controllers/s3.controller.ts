@@ -9,30 +9,22 @@ import sharp from "sharp";
 const randomImageName = (bytes: number = 32) =>
   crypto.randomBytes(bytes).toString("hex");
 
-export const getImage = asyncHandler(
-  async (req: Request, res: Response): Promise<any> => {
-    // get all user chats
-    const users: any[] = [];
+export const getImage = async (imgName: string): Promise<any> => {
+  const getObjectParams = {
+    Bucket: bucketName,
+    Key: imgName,
+  };
 
-    for (const user of users) {
-      const getObjectParams = {
-        Bucket: bucketName,
-        Key: "", // this is the image name
-      };
+  const command = new GetObjectCommand(getObjectParams);
+  const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
 
-      const command = new GetObjectCommand(getObjectParams);
-      const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
-      user.imageUrl = url;
-    }
-
-    res.json({ users });
-  }
-);
+  return url;
+};
 
 export const uploadImage = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const buffer = await sharp(req.file?.buffer)
-      .resize({ height: 1920, width: 1080, fit: "contain" })
+      .resize({ height: 300, width: 300, fit: "fill" })
       .toBuffer(); // resize image
 
     const imageName = randomImageName(); // store this in db to access image
