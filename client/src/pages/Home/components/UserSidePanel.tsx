@@ -23,7 +23,7 @@ const UserSidePanel = (props: any) => {
         <ul className="w-full bg-[#111214] rounded-md p-3">
           <li className="border-b border-[#2E2F34]">
             <h4 className="font-semibold text-[white]">{chatUsername}</h4>
-            <span className=" ">tag</span>
+            <span>tag</span>
           </li>
           <li className="border-b border-[#2E2F34] mt-2 pb-2">
             <h6 className="font-bold text-[11px] text-[white]">

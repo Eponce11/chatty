@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { useAppSelector } from "../../../app/hooks";
 import {
@@ -36,6 +36,7 @@ const MessageChannel = () => {
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
   const [socket] = useState(() => io(":8000"));
+  const placeHolderBottom = useRef<any>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -149,6 +150,7 @@ const MessageChannel = () => {
                 </div>
               );
             })}
+            <span ref={placeHolderBottom}/>
           </section>
           <section className="h-[68px] w-full px-3 bottom-0 absolute">
             <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
@@ -166,7 +168,7 @@ const MessageChannel = () => {
             </div>
           </section>
         </div>
-        <UserSidePanel />
+        <UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>
       </div>
     </div>
   );
