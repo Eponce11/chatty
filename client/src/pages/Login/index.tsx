@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useLoginMutation } from "../../api/authApiSlice";
 import { useAppDispatch } from "../../app/hooks";
 import { setCredentials } from "../../app/features/authSlice";
-import { LoginBg } from "../../common/static/img";
+import { LoginRegisterBg } from "../../common/static/img";
 
 const Login = () => {
   const [email, setEmail] = useState<string>("");
@@ -29,7 +29,7 @@ const Login = () => {
       <div
         className={`w-full h-full flex items-center justify-center bg-[#5865F2]`}
         style={{
-          backgroundImage: `url('${LoginBg}')`,
+          backgroundImage: `url('${LoginRegisterBg}')`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",
           width: "full",

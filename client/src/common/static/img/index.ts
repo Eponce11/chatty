@@ -1,3 +1,3 @@
-import LoginBg from './LoginBg.svg';
+import LoginRegisterBg from './LoginRegisterBg.svg';
 
-export { LoginBg };
+export { LoginRegisterBg };

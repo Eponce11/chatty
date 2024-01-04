@@ -4,6 +4,7 @@ import { months, days, years } from "./constants";
 import { Link, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../app/hooks";
 import { setCredentials } from "../../app/features/authSlice";
+import { LoginRegisterBg } from "../../common/static/img";
 
 const Register = () => {
   const [formData, setFormData] = useState<any>({
@@ -55,7 +56,17 @@ const Register = () => {
   };
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div
+        className={`w-full h-full flex items-center justify-center bg-[#5865F2]`}
+        style={{
+          backgroundImage: `url('${LoginRegisterBg}')`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "contain",
+          width: "full",
+          backgroundPosition: "center",
+          
+        }}
+      >
       <div className="w-[480px] h-[646px] bg-[#313338] p-8 rounded-md">
         <h2 className="text-[#F2F3F5] text-center text-[22px] font-bold mb-3">
           Create an account
