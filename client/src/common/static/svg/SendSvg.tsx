@@ -1,12 +1,15 @@
 import { useState } from "react";
 
 const SendSvg = (props: any) => {
+  const { handleNewMessage } = props;
+
   const [color, setColor] = useState<string>("#949BA4");
 
   return (
     <div
       onMouseLeave={() => setColor("#949BA4")}
       onMouseEnter={() => setColor("#FFFFFF")}
+      onClick={handleNewMessage}
     >
       <svg
         className="cursor-pointer"

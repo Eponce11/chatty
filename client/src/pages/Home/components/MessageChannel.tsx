@@ -55,10 +55,12 @@ const MessageChannel = () => {
         setIsLoading(false);
       } catch (err) {
         console.log(err);
+      } finally {
+        placeHolderBottom.current.scrollIntoView({ behavior: "smooth" });
       }
     };
     fetchData();
-  }, [_chatId]);
+  }, [_chatId, placeHolderBottom]);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -92,6 +94,7 @@ const MessageChannel = () => {
       message: res.text,
     });
     console.log(res);
+    placeHolderBottom.current.lastElementChild.scrollIntoView({ behavior: "smooth" });
   };
 
   return isLoading ? null : (
@@ -102,7 +105,7 @@ const MessageChannel = () => {
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
-          <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto">
+          <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto" ref={placeHolderBottom}>
             {messages.map((message: any, idx: number) => {
               return idx !== 0 &&
                 messages[idx - 1].fromSelf === message.fromSelf ? (
@@ -150,7 +153,6 @@ const MessageChannel = () => {
                 </div>
               );
             })}
-            <span ref={placeHolderBottom}/>
           </section>
           <section className="h-[68px] w-full px-3 bottom-0 absolute">
             <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
