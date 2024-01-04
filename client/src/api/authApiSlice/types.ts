@@ -7,6 +7,7 @@ export interface LoginResponse {
   id: string;
   username: string;
   token: string;
+  profilePicture: string | null;
 }
 
 export interface RegisterCredentials {
