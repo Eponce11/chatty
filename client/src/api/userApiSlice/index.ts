@@ -9,8 +9,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
         body: { ...data }
       }),
     }),
+    setProfilePicture: builder.mutation<any,any>({
+      query: (id: string) => ({
+        url: `/user/new/profile-picture`,
+        method: 'POST',
+        body: { _id: id }
+      })
+    })
   }),
 });
 
 
-export const { useSearchUserByUsernameMutation } = userApiSlice;
+export const { useSearchUserByUsernameMutation, useSetProfilePictureMutation } = userApiSlice;
