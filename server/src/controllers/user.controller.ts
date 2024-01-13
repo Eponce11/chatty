@@ -67,6 +67,5 @@ export const setNewProfilePicture = asyncHandler(
         console.log(err);
         return res.status(400).json({ err });
       });
-    
   }
 );

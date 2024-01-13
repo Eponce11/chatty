@@ -10,11 +10,17 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     setProfilePicture: builder.mutation<any,any>({
-      query: (id: string) => ({
-        url: `/user/new/profile-picture`,
-        method: 'POST',
-        body: { _id: id }
-      })
+      query: (data: any) => {
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', data.image);
+        bodyFormData.append('_id', data.id)
+        return {
+          url: `/user/new/profile-picture`,
+          method: 'POST',
+          body: bodyFormData,
+          formData: true
+        }
+      }
     })
   }),
 });

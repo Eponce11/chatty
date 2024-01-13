@@ -1,9 +1,17 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { DefaultProfileSvg } from "../../../common/static/svg";
+import { useSetProfilePictureMutation } from "../../../api/userApiSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
 
 const ProfilePictureSelect = () => {
   const [currentImage, setCurrentImage] = useState<any>(null);
   const inputSelect = useRef<any>();
+  const [currentFile, setCurrentFile] = useState<any>(null);
+  const [setProfilePicture, { error }] = useSetProfilePictureMutation();
+  const id = useAppSelector(selectAuthId);
+  const navigate = useNavigate();
 
   const handleFileUpload = (e: any): void => {
     e.preventDefault();
@@ -17,6 +25,7 @@ const ProfilePictureSelect = () => {
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
       setCurrentImage(fileReader.result);
+      setCurrentFile(file);
     };
     fileReader.onerror = (error) => {
       console.log(error);
@@ -27,13 +36,20 @@ const ProfilePictureSelect = () => {
     e: React.MouseEvent<HTMLElement>
   ): Promise<void> => {
     e.preventDefault();
-    const file = inputSelect.current.target.files[0]
+    
+    if (!currentFile) {
+      navigate('/home');
+    }
+
+    const response = await setProfilePicture({image: currentFile, id: id});
+    console.log(response);
   };
 
   const handleRemoveProfilePicture = (e: React.MouseEvent<HTMLElement>): void => {
     e.preventDefault();
     inputSelect.current.value = null;
     setCurrentImage(null);
+    setCurrentFile(null);
   }
 
   return (

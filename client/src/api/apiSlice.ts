@@ -26,11 +26,13 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     if (refreshResult?.data) {
       const id = api.getState().auth.id;
       const username = api.getState().auth.username;
+      const profilePicture = api.getState().auth.profilePicture
       api.dispatch(
         setCredentials({
           id,
           username,
           token: refreshResult.data.accessToken,
+          profilePicture
         })
       );
       result = await baseQuery(args, api, extraOptions);
