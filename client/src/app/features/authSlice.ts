@@ -31,11 +31,14 @@ const authSlice = createSlice({
       state.username = null;
       state.token = null;
       state.profilePicture = null;
+    },
+    setAuthProfilePicture: (state: AuthState, action: PayloadAction<string>) => {
+      state.profilePicture = action.payload
     }
   },
 });
 
-export const { setCredentials, logout } = authSlice.actions;
+export const { setCredentials, logout, setAuthProfilePicture } = authSlice.actions;
 
 export const selectAuthId = (state: RootState) => state.auth.id;
 export const selectAuthUsername = (state: RootState) => state.auth.username;
