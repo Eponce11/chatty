@@ -13,7 +13,7 @@ import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
 
 const StatusIcon = (props: any) => {
-  const { status, chatId, userId, userList, setUserList } = props;
+  const { status, chatId, userId, userList, setUserList, setIsCreateDmOpen } = props;
 
   const [createDmRequest] = useCreateDmRequestMutation();
   const [acceptDmRequest] = useAcceptDmRequestMutation();
@@ -46,7 +46,7 @@ const StatusIcon = (props: any) => {
 
   return (
     <>
-      {status === "EXIST" && <ChatSvg chatId={chatId} />}
+      {status === "EXIST" && <ChatSvg chatId={chatId} setIsCreateDmOpen={setIsCreateDmOpen}/>}
       {status === "PENDING" && <PendingSvg />}
       {status === "REQUEST" && (
         <AcceptSvg handleAcceptRequest={handleAcceptRequest} />

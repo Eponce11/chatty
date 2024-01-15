@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ChatSvg = (props: any) => {
-  const { chatId } = props;
+  const { chatId, setIsCreateDmOpen } = props;
   const navigate = useNavigate();
   const [color, setColor] = useState<string>("#949BA4");
 
@@ -11,7 +11,10 @@ const ChatSvg = (props: any) => {
       onMouseLeave={() => setColor("#949BA4")}
       onMouseEnter={() => setColor("#FFFFFF")}
       className="cursor-pointer"
-      onClick={() => navigate(`/home/message/${chatId}`)}
+      onClick={() => {
+        setIsCreateDmOpen(false);
+        navigate(`/home/message/${chatId}`);
+      }}
     >
       <svg
         viewBox="0 0 24 24"

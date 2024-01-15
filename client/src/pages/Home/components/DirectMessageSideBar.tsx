@@ -18,7 +18,10 @@ const DirectMessageSideBar = () => {
   return (
     <div className="h-full w-full bg-[#2B2D31]">
       <div className="w-full h-[48px] border-b border-b-[#1F2023] flex items-center justify-center">
-        <div className="w-[224px] h-[28px] bg-[#1E1F22] text-[#949BA0] text-[13px] pl-2 flex items-center rounded-sm">
+        <div
+          className="w-[224px] h-[28px] bg-[#1E1F22] text-[#949BA0] text-[13px] pl-2 flex items-center rounded-sm hover:text-[white] cursor-default cursor-pointer"
+          onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}
+        >
           <p>Find or start a conversation</p>
         </div>
       </div>
@@ -38,10 +41,7 @@ const DirectMessageSideBar = () => {
         </ul>
 
         <ul className="w-full text-[#949BA0] mt-4">
-          <span
-            className="pl-3 text-[11px] tracking-wider hover:text-[white] cursor-default relative"
-            onClick={() => setIsCreateDmOpen((prev: boolean) => !prev)}
-          >
+          <span className="pl-3 text-[11px] tracking-wider relative">
             DIRECT MESSAGES
           </span>
           {isFetching
@@ -54,7 +54,11 @@ const DirectMessageSideBar = () => {
                     onClick={() => navigate(`message/${dmChat.chatId}`)}
                   >
                     {dmChat.userProfilePicture ? (
-                      <img src={dmChat.userProfilePicture} alt="profilePicture" className="w-[35px] h-[35px] mr-2 rounded-full"/>
+                      <img
+                        src={dmChat.userProfilePicture}
+                        alt="profilePicture"
+                        className="w-[35px] h-[35px] mr-2 rounded-full"
+                      />
                     ) : (
                       <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />
                     )}
@@ -63,7 +67,9 @@ const DirectMessageSideBar = () => {
                 );
               })}
         </ul>
-        {isCreateDmOpen ? <CreateDm chats={currentData} /> : null}
+        {isCreateDmOpen ? (
+          <CreateDm chats={currentData} setIsCreateDmOpen={setIsCreateDmOpen} />
+        ) : null}
       </div>
     </div>
   );
