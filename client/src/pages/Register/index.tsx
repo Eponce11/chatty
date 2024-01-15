@@ -3,7 +3,7 @@ import { RegisterForm, ProfilePictureSelect } from "./components";
 import { LoginRegisterBg } from "../../common/static/img";
 
 const Register = () => {
-  const [page, setPage] = useState<Number>(1);
+  const [page, setPage] = useState<Number>(0);
 
   return (
     <div

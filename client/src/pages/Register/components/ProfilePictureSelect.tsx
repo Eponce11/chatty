@@ -60,7 +60,7 @@ const ProfilePictureSelect = () => {
   };
 
   return (
-    <div className="w-[480px] h-[646px] bg-[#313338] p-8 rounded-md flex flex-col items-center">
+    <div className="w-[480px] bg-[#313338] p-8 rounded-md flex flex-col items-center">
       {currentImage !== null ? (
         <img
           src={currentImage}
@@ -70,15 +70,29 @@ const ProfilePictureSelect = () => {
       ) : (
         <DefaultProfileSvg className="w-36 aspect-square rounded-full" />
       )}
-      <input
-        type="file"
-        accept=".jpeg, .png, .jpg"
-        onChange={handleFileUpload}
-        ref={inputSelect}
-      />
-      <button onClick={handleRemoveProfilePicture}>Remove</button>
+
+      <div className="w-full flex mt-6 justify-center">
+
+        <label className="w-1/3 h-[44px] mr-4 rounded-sm flex items-center justify-center font-semibold bg-[white] ">
+          <input
+            type="file"
+            accept=".jpeg, .png, .jpg"
+            onChange={handleFileUpload}
+            ref={inputSelect}
+            className="hidden"
+          />
+          <span>Select File</span>
+        </label>
+
+        <button
+          onClick={handleRemoveProfilePicture}
+          className="h-[44px] w-1/3 bg-[red] rounded-sm font-semibold"
+        >
+          Remove
+        </button>
+      </div>
       <button
-        className="w-full h-[44px] bg-[#5865F2] rounded-sm text-[#F2F3F5] font-semibold mt-5 mb-1"
+        className="w-full h-[44px] bg-[#5865F2] rounded-sm text-[#F2F3F5] font-semibold mt-10 mb-1"
         onClick={handleSubmitProfilePicture}
       >
         Continue
