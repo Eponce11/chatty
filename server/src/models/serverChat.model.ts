@@ -28,6 +28,6 @@ const ServerChatSchema = new Schema<ServerChat>(
   { timestamps: true }
 );
 
-const ServerChat = model<ServerChat>("DmChat", ServerChatSchema);
+const ServerChat = model<ServerChat>("ServerChat", ServerChatSchema);
 
 export default ServerChat;
