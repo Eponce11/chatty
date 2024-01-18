@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes";
 import messageRoutes from "./routes/message.routes";
 import dmRequestRoutes from "./routes/dmRequest.routes";
 import dmChatRoutes from "./routes/dmChat.routes";
+import serverRoutes from "./routes/server.routes";
 import s3Routes from "./routes/s3.routes";
 import webSocket from "./webSocket";
 
@@ -33,6 +34,7 @@ messageRoutes(app);
 dmRequestRoutes(app);
 dmChatRoutes(app);
 s3Routes(app);
+serverRoutes(app);
 
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)

@@ -32,8 +32,7 @@ const ServerSchema = new Schema<Server>(
     } // needs to create new model
   }
 )
-/*
+
 const Server = model<Server>("Server", ServerSchema);
 
 export default Server;
-*/
