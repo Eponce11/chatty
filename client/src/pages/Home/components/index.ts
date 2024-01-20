@@ -7,6 +7,8 @@ import UserSidePanel from "./UserSidePanel";
 import MessageRequestChannel from "./MessageRequestChannel";
 import CreateDm from "./CreateDm";
 import CreateServer from "./CreateServer";
+import CreateOrJoinServer from "./CreateOrJoinServer";
+import NewServerForm from "./NewServerForm";
 
 export {
   ServerSelect,
@@ -18,4 +20,6 @@ export {
   MessageRequestChannel,
   CreateDm,
   CreateServer,
+  CreateOrJoinServer,
+  NewServerForm,
 };
