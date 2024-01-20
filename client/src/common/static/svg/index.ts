@@ -9,4 +9,18 @@ import AddUserSvg from "./AddUserSvg";
 import PendingSvg from "./PendingSvg";
 import DefaultProfileSvg from "./DefaultProfileSvg";
 import CancelSvg from "./CancelSvg";
-export { UserSvg, MessageSvg, SettingSvg, SendSvg, AddSvg, ChatSvg, AcceptSvg, AddUserSvg, PendingSvg, DefaultProfileSvg, CancelSvg };
+import RightArrowSvg from "./RightArrowSvg";
+export {
+  UserSvg,
+  MessageSvg,
+  SettingSvg,
+  SendSvg,
+  AddSvg,
+  ChatSvg,
+  AcceptSvg,
+  AddUserSvg,
+  PendingSvg,
+  DefaultProfileSvg,
+  CancelSvg,
+  RightArrowSvg,
+};

@@ -1,3 +1,3 @@
 import LoginRegisterBg from './LoginRegisterBg.svg';
-
-export { LoginRegisterBg };
+import CreateServerImg from './CreateServerImg.svg';
+export { LoginRegisterBg, CreateServerImg };

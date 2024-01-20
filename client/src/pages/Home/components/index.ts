@@ -6,6 +6,7 @@ import Header from "./Header";
 import UserSidePanel from "./UserSidePanel";
 import MessageRequestChannel from "./MessageRequestChannel";
 import CreateDm from "./CreateDm";
+import CreateServer from "./CreateServer";
 
 export {
   ServerSelect,
@@ -16,4 +17,5 @@ export {
   UserSidePanel,
   MessageRequestChannel,
   CreateDm,
+  CreateServer,
 };
