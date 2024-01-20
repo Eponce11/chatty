@@ -17,7 +17,9 @@ const CreateOrJoinServer = (props: any) => {
 
         <div
           className="w-full h-[70px] border border-[#3F4147] rounded-lg p-3 flex items-center justify-between hover:bg-[#34363b] cursor-pointer"
-          onClick={() => {setCurrentSection("NEWSERVER")}}
+          onClick={() => {
+            setCurrentSection("NEWSERVER");
+          }}
         >
           <div className="h-full flex items-center">
             <img src={CreateServerImg} alt="" className="h-full mr-3" />
@@ -31,7 +33,12 @@ const CreateOrJoinServer = (props: any) => {
         <h3 className="text-white text-[20px] font-medium mb-2">
           Have an invite ready?
         </h3>
-        <button className="w-full bg-[#4E5058] text-white rounded-md p-2 hover:bg-[#64656d]">
+        <button
+          className="w-full bg-[#4E5058] text-white rounded-md p-2 hover:bg-[#64656d]"
+          onClick={() => {
+            setCurrentSection("JOINSERVER");
+          }}
+        >
           Join a Server
         </button>
       </div>

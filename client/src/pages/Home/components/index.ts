@@ -9,6 +9,7 @@ import CreateDm from "./CreateDm";
 import CreateServer from "./CreateServer";
 import CreateOrJoinServer from "./CreateOrJoinServer";
 import NewServerForm from "./NewServerForm";
+import JoinServer from "./JoinServer";
 
 export {
   ServerSelect,
@@ -22,4 +23,5 @@ export {
   CreateServer,
   CreateOrJoinServer,
   NewServerForm,
+  JoinServer,
 };

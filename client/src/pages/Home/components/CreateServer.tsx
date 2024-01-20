@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { CancelSvg } from "../../../common/static/svg";
-import { CreateOrJoinServer, NewServerForm } from ".";
+import { CreateOrJoinServer, NewServerForm, JoinServer } from ".";
 
 type ServerSelectSection = "NEWSERVER" | "JOINSERVER" | "CREATEORJOINSERVER";
 
@@ -22,6 +22,8 @@ const CreateServer = (props: any) => {
         {currentSection === "CREATEORJOINSERVER" && <CreateOrJoinServer setCurrentSection={setCurrentSection} />}
 
         {currentSection === "NEWSERVER" && <NewServerForm setCurrentSection={setCurrentSection} />}
+
+        {currentSection === "JOINSERVER" && <JoinServer setCurrentSection={setCurrentSection} />}
       </div>
     </div>
   );
