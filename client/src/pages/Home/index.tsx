@@ -23,7 +23,11 @@ const Home = () => {
     <div className="h-full w-full bg-[#1E1F22] flex px-1">
       <ServerSelect />
       <div className="w-[240px] h-full relative">
-        <DirectMessageSideBar />
+        
+        <Routes>
+          <Route path="/server" element={<ServerChatSidebar />} />
+          <Route path="*" element={<DirectMessageSideBar />} />
+        </Routes>
         
         <div className="w-full h-[53px] bg-[#232428] absolute bottom-0 flex items-center p-2 justify-between">
           <div className="flex items-center">

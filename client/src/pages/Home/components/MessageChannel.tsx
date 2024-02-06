@@ -11,7 +11,7 @@ import {
   useGetChatMessagesMutation,
 } from "../../../api/messageApiSlice";
 import { SendSvg, AddSvg, DefaultProfileSvg } from "../../../common/static/svg";
-import { Header, UserSidePanel } from ".";
+import { Header, UserSidePanel, ServerMembersSidePanel } from ".";
 import { NewMessageResponse } from "../../../api/messageApiSlice/types";
 import { io } from "socket.io-client";
 interface ChatInfo {
@@ -170,10 +170,12 @@ const MessageChannel = () => {
             </div>
           </section>
         </div>
-        <UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>
+        <ServerMembersSidePanel/>
       </div>
     </div>
   );
 };
 
 export default MessageChannel;
+
+//<UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>

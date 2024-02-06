@@ -11,6 +11,7 @@ import CreateOrJoinServer from "./CreateOrJoinServer";
 import NewServerForm from "./NewServerForm";
 import JoinServer from "./JoinServer";
 import ServerChatSidebar from "./ServerChatSidebar";
+import ServerMembersSidePanel from "./ServerMembersSidePanel";
 
 export {
   ServerSelect,
@@ -26,4 +27,5 @@ export {
   NewServerForm,
   JoinServer,
   ServerChatSidebar,
+  ServerMembersSidePanel,
 };
