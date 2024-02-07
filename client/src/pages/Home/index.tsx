@@ -6,6 +6,7 @@ import {
   Header,
   UserSidePanel,
   MessageRequestChannel,
+  ServerMessageChannel,
 } from "./components";
 import { useAppSelector } from "../../app/hooks";
 import {
@@ -41,6 +42,7 @@ const Home = () => {
         <Routes>
           <Route path="/message-request" element={<MessageRequestChannel />} />
           <Route path="/message/:_chatId" element={<MessageChannel />} />
+          <Route path="/server" element={<ServerMessageChannel />} />
         </Routes>
       </div>
     </div>
@@ -49,5 +51,29 @@ const Home = () => {
 
 export default Home;
 
-// absolute top-[48px] bottom-0 w-full flex
-// 
+
+
+/*
+      <div className="w-[240px] h-full relative">
+        <Routes>
+          <Route path="/server" element={<ServerChatSidebar />} />
+          <Route path="*" element={<DirectMessageSideBar />} />
+        </Routes>
+        
+        <div className="w-full h-[53px] bg-[#232428] absolute bottom-0 flex items-center p-2 justify-between">
+          <div className="flex items-center">
+            {profilePicture ? <img src={profilePicture} alt="profile picture" className="w-[35px] h-[35px] mr-2 rounded-full" /> : <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />}
+            <span className="text-white">{username}</span>
+          </div>
+          <SettingSvg />
+        </div>
+      </div>
+
+      <div className="grow bg-[#313338]">
+        <Routes>
+          <Route path="/message-request" element={<MessageRequestChannel />} />
+          <Route path="/message/:_chatId" element={<MessageChannel />} />
+        </Routes>
+      </div>
+
+*/

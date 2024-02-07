@@ -170,7 +170,7 @@ const MessageChannel = () => {
             </div>
           </section>
         </div>
-        <ServerMembersSidePanel/>
+        <UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>
       </div>
     </div>
   );
@@ -178,4 +178,3 @@ const MessageChannel = () => {
 
 export default MessageChannel;
 
-//<UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>

@@ -12,6 +12,7 @@ import NewServerForm from "./NewServerForm";
 import JoinServer from "./JoinServer";
 import ServerChatSidebar from "./ServerChatSidebar";
 import ServerMembersSidePanel from "./ServerMembersSidePanel";
+import ServerMessageChannel from "./ServerMessageChannel";
 
 export {
   ServerSelect,
@@ -28,4 +29,5 @@ export {
   JoinServer,
   ServerChatSidebar,
   ServerMembersSidePanel,
+  ServerMessageChannel,
 };
