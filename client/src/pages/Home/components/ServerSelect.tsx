@@ -1,21 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CreateServer } from ".";
 
 const ServerSelect = () => {
   const tempServers = [0, 0, 0, 0, 0, 0];
 
   const [isCreateServerOpen, setIsCreateServerOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <div className="h-full w-[72px] flex justify-center overflow-x-auto">
       <ul className="w-[48px] h-full py-2">
-        <li className="border-b-2 pb-2 border-[#35363C]">
+        <li className="border-b-2 pb-2 border-[#35363C]" onClick={() => navigate('/home')}>
           <div className="w-[48px] aspect-square bg-[blue] rounded-full" />
         </li>
 
         {tempServers.map((server, idx) => {
           return (
-            <li className={`mb-2 ${idx === 0 && "mt-2"}`}>
+            <li className={`mb-2 ${idx === 0 && "mt-2"}`} onClick={() => navigate('/home/server')}>
               <div className="w-[48px] aspect-square bg-[blue] rounded-full" />
             </li>
           );
