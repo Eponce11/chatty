@@ -1,11 +1,40 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthUsername } from "../../../app/features/authSlice";
+import { useConvertFileToBase64 } from "../../../common/hooks";
 
 const NewServerForm = (props: any) => {
   const { setCurrentSection } = props;
   const username = useAppSelector(selectAuthUsername);
   const [serverName, setServerName] = useState<string>(`${username} server`);
+  const [currentImage, setCurrentImage] = useState<any>(null);
+  const [currentFile, setCurrentFile] = useState<any>(null);
+  const inputSelect = useRef<any>();
+
+  const handleFileUpload = async (e: any): Promise<void> => {
+    e.preventDefault();
+    try {
+      const file = e.target.files[0];
+      const base64File = await useConvertFileToBase64(file);
+      setCurrentImage(base64File);
+      setCurrentImage(file);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRemoveProfilePicture = (
+    e: React.MouseEvent<HTMLElement>
+  ): void => {
+    e.preventDefault();
+    inputSelect.current.value = null;
+    setCurrentImage(null);
+    setCurrentFile(null);
+  };
+
+  const handleSubmitNewServer = () => {
+    
+  }
 
   return (
     <>
@@ -17,6 +46,14 @@ const NewServerForm = (props: any) => {
           Give your new server a personality with a name and an icon. You can
           always change it later.
         </p>
+
+        <input
+          type="file"
+          accept=".jpeg, .png, .jpg"
+          onChange={handleFileUpload}
+          ref={inputSelect}
+          className=""
+        />
 
         <div className="w-full text-left">
           <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
