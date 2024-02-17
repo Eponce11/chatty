@@ -1,5 +1,9 @@
+import { useParams } from "react-router-dom";
+
 const ServerChatSidebar = () => {
   const tempChats = [0, 0, 0, 0];
+  const { _serverId } = useParams();
+  
 
   return (
     <div className="h-full w-full bg-[#2B2D31]">

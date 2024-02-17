@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-interface ServerChat {
+export interface ServerChat {
   _id: mongoose.Schema.Types.ObjectId;
   title: string;
   messages: mongoose.Schema.Types.ObjectId[];
