@@ -1,4 +1,4 @@
-import mongoose, { Schema, model, mongo } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 interface Server {
   title: string;
@@ -13,25 +13,25 @@ const ServerSchema = new Schema<Server>(
     title: {
       type: String,
       required: [true, "is required"],
-      minlength: [2, "must be at least 2 chars"]
+      minlength: [2, "must be at least 2 chars"],
     },
     image: {
       type: String || null,
-      required: true,
     },
     members: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-        required: true
-      }
+        required: true,
+      },
     ],
     textChannels: [],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-    } // needs to create new model
-  }
-)
+    }, // needs to create new model
+  },
+  { timestamps: true }
+);
 
 const Server = model<Server>("Server", ServerSchema);
 

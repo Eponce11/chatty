@@ -1,14 +1,20 @@
 import { useState, useRef } from "react";
 import { useAppSelector } from "../../../app/hooks";
-import { selectAuthUsername } from "../../../app/features/authSlice";
+import {
+  selectAuthUsername,
+  selectAuthId,
+} from "../../../app/features/authSlice";
 import { useConvertFileToBase64 } from "../../../common/hooks";
+import { useCreateServerMutation } from "../../../api/serverApiSlice";
 
 const NewServerForm = (props: any) => {
   const { setCurrentSection } = props;
   const username = useAppSelector(selectAuthUsername);
+  const userId = useAppSelector(selectAuthId);
   const [serverName, setServerName] = useState<string>(`${username} server`);
   const [currentImage, setCurrentImage] = useState<any>(null);
   const [currentFile, setCurrentFile] = useState<any>(null);
+  const [createServer] = useCreateServerMutation();
   const inputSelect = useRef<any>();
 
   const handleFileUpload = async (e: any): Promise<void> => {
@@ -17,7 +23,7 @@ const NewServerForm = (props: any) => {
       const file = e.target.files[0];
       const base64File = await useConvertFileToBase64(file);
       setCurrentImage(base64File);
-      setCurrentImage(file);
+      setCurrentFile(file);
     } catch (error) {
       console.log(error);
     }
@@ -32,9 +38,21 @@ const NewServerForm = (props: any) => {
     setCurrentFile(null);
   };
 
-  const handleSubmitNewServer = () => {
-    
-  }
+  const handleSubmitNewServer = async (
+    e: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    try {
+      const response = await createServer({
+        userId: userId,
+        title: serverName,
+        image: currentFile,
+      }).unwrap();
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -77,7 +95,10 @@ const NewServerForm = (props: any) => {
         >
           Back
         </span>
-        <button className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2">
+        <button
+          className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2"
+          onClick={handleSubmitNewServer}
+        >
           Create
         </button>
       </div>
