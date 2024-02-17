@@ -10,6 +10,7 @@ export interface User {
   directMessages: mongoose.Schema.Types.ObjectId[];
   refreshToken: string;
   profilePicture: string | null;
+  servers: mongoose.Schema.Types.ObjectId[];
 }
 
 const UserSchema = new Schema<User>(
@@ -52,6 +53,12 @@ const UserSchema = new Schema<User>(
       type: String || null,
       required: true,
     },
+    servers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Server",
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import Server from "../models/server.model";
 import ServerChat from "../models/serverChat.model";
 import { uploadImage } from "./s3.controller";
+import User from "../models/user.model";
 
 export const createServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -10,7 +11,7 @@ export const createServer = asyncHandler(
 
     const serverExists = await Server.findOne({ owner: userId });
     if (serverExists) {
-      return res.status(400).json({"Msg": "Already Own a Server"})
+      return res.status(400).json({ Msg: "Already Own a Server" });
     }
 
     let newServer;
@@ -27,7 +28,6 @@ export const createServer = asyncHandler(
       return res.status(400).json(err);
     }
 
-
     const newServerChat = await ServerChat.create({
       title: "General",
       messages: [],
@@ -42,6 +42,12 @@ export const createServer = asyncHandler(
     await Server.findByIdAndUpdate(
       { _id: newServer._id },
       { $push: { textChannels: newServerChat._id }, image: imageName },
+      { new: true }
+    );
+
+    await User.findByIdAndUpdate(
+      { _id: userId },
+      { $push: { servers: newServer._id } },
       { new: true }
     );
 
