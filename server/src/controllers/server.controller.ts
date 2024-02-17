@@ -8,6 +8,11 @@ export const createServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { title, userId } = req.body;
 
+    const serverExists = await Server.findOne({ owner: userId });
+    if (serverExists) {
+      return res.status(400).json({"Msg": "Already Own a Server"})
+    }
+
     let newServer;
 
     try {
