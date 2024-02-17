@@ -16,7 +16,13 @@ export const serverApiSlice = apiSlice.injectEndpoints({
         };
       },
     }),
+    getServers: builder.query<any, any>({
+      query: (id: string) => ({
+        url: `/server/getAll/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useCreateServerMutation } = serverApiSlice;
+export const { useCreateServerMutation, useGetServersQuery } = serverApiSlice;

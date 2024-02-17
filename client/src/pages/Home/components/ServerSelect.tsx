@@ -1,24 +1,44 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGetServersQuery } from "../../../api/serverApiSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
 import { CreateServer } from ".";
 
 const ServerSelect = () => {
-  const tempServers = [0, 0, 0, 0, 0, 0];
-
+  const id = useAppSelector(selectAuthId);
+  const { currentData: servers, isFetching } = useGetServersQuery(id);
   const [isCreateServerOpen, setIsCreateServerOpen] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  return (
+  return isFetching ? null : (
     <div className="h-full w-[72px] flex justify-center overflow-x-auto">
       <ul className="w-[48px] h-full py-2">
-        <li className="border-b-2 pb-2 border-[#35363C]" onClick={() => navigate('/home')}>
+        <li
+          className="border-b-2 pb-2 border-[#35363C]"
+          onClick={() => navigate("/home")}
+        >
           <div className="w-[48px] aspect-square bg-[blue] rounded-full" />
         </li>
 
-        {tempServers.map((server, idx) => {
+        {servers.servers.map((server: any, idx: number) => {
           return (
-            <li className={`mb-2 ${idx === 0 && "mt-2"}`} onClick={() => navigate('/home/server')}>
-              <div className="w-[48px] aspect-square bg-[blue] rounded-full" />
+            <li
+              key={server._id}
+              className={`mb-2 ${idx === 0 && "mt-2"} cursor-pointer`}
+              onClick={() => navigate("/home/server")}
+            >
+              {server.image !== null ? (
+                <img
+                  src={server.image}
+                  alt="image"
+                  className="w-[48px] aspect-square rounded-full"
+                />
+              ) : (
+                <div className="w-[48px] aspect-square rounded-full bg-[#313338] flex items-center justify-center">
+                  <span className="text-white text-[18px]">ES</span>
+                </div>
+              )}
             </li>
           );
         })}
@@ -35,7 +55,9 @@ const ServerSelect = () => {
         </li>
       </ul>
 
-      {isCreateServerOpen ? <CreateServer setIsCreateServerOpen={setIsCreateServerOpen} /> : null}
+      {isCreateServerOpen ? (
+        <CreateServer setIsCreateServerOpen={setIsCreateServerOpen} />
+      ) : null}
     </div>
   );
 };

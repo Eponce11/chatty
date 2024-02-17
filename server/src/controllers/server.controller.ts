@@ -4,6 +4,7 @@ import Server from "../models/server.model";
 import ServerChat from "../models/serverChat.model";
 import { uploadImage } from "./s3.controller";
 import User from "../models/user.model";
+import { User as UserInterface } from "../models/user.model";
 
 export const createServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -52,5 +53,20 @@ export const createServer = asyncHandler(
     );
 
     return res.json({ Msg: "Success" });
+  }
+);
+
+export const getUserServers = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { _id } = req.params;
+    const user = await User.findById({ _id: _id }).populate<{
+      servers: UserInterface[];
+    }>("servers");
+
+    if (!user) {
+      return res.sendStatus(400);
+    }
+    console.log(user.servers)
+    return res.json({ servers: [...user.servers] });
   }
 );

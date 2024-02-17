@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from "mongoose";
 
-interface Server {
+export interface Server {
   title: string;
   image: string | null;
   members: mongoose.Schema.Types.ObjectId[];
