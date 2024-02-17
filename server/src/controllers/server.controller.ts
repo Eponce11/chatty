@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import Server from "../models/server.model";
 import ServerChat from "../models/serverChat.model";
-import { uploadImage } from "./s3.controller";
+import { uploadImage, getImage } from "./s3.controller";
 import User from "../models/user.model";
-import { User as UserInterface } from "../models/user.model";
+import { Server as ServerInterface } from "../models/server.model";
 
 export const createServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -60,13 +60,26 @@ export const getUserServers = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { _id } = req.params;
     const user = await User.findById({ _id: _id }).populate<{
-      servers: UserInterface[];
+      servers: ServerInterface[];
     }>("servers");
 
     if (!user) {
       return res.sendStatus(400);
     }
-    console.log(user.servers)
-    return res.json({ servers: [...user.servers] });
+
+    const response = await Promise.all(
+      user.servers.map(async (server) => {
+        const serverImage =
+          server.image === null ? null : await getImage(server.image);
+        return {
+          _id: server._id,
+          title: server.title,
+          image: serverImage,
+        };
+      })
+    );
+    
+    console.log(response);
+    return res.json({ servers: [...response] });
   }
 );
