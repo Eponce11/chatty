@@ -56,7 +56,7 @@ const NewServerForm = (props: any) => {
 
   return (
     <>
-      <div className="w-full p-4 mt-2 text-center">
+      <div className="w-full p-4 mt-2 text-center flex flex-col items-center">
         <h2 className="text-white text-[25px] font-semibold mb-2">
           Customize Your Server
         </h2>
@@ -65,13 +65,37 @@ const NewServerForm = (props: any) => {
           always change it later.
         </p>
 
-        <input
-          type="file"
-          accept=".jpeg, .png, .jpg"
-          onChange={handleFileUpload}
-          ref={inputSelect}
-          className=""
-        />
+        {currentFile !== null ? (
+          <img
+            src={currentImage}
+            alt=""
+            className="w-[100px] aspect-square rounded-full"
+          />
+        ) : (
+          <div className="bg-[#2B2D31] h-[100px] w-[100px] rounded-full flex items-center justify-center">
+            <span className="text-white text-[40px]">{`${username?.charAt(0).toUpperCase()}S`}</span>
+          </div>
+        )}
+
+        <div className="w-full flex mt-6 justify-center mb-3">
+          <label className="w-1/4 h-[30px] mr-4 rounded-sm flex items-center justify-center font-semibold bg-[white] cursor-pointer">
+            <input
+              type="file"
+              accept=".jpeg, .png, .jpg"
+              onChange={handleFileUpload}
+              ref={inputSelect}
+              className="hidden"
+            />
+            <span>Select File</span>
+          </label>
+
+          <button
+            onClick={handleRemoveProfilePicture}
+            className="h-[30px] w-1/4 bg-[red] rounded-sm font-semibold"
+          >
+            Remove
+          </button>
+        </div>
 
         <div className="w-full text-left">
           <label className="text-[#B2B7BD] text-[11px] tracking-wide font-bold">
