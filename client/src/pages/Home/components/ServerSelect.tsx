@@ -18,24 +18,24 @@ const ServerSelect = () => {
           className="border-b-2 pb-2 border-[#35363C]"
           onClick={() => navigate("/home")}
         >
-          <div className="w-[48px] aspect-square bg-[blue] rounded-full" />
+          <div className="w-[48px] aspect-square bg-[blue] rounded-[30px] cursor-pointer ease-out duration-200 hover:rounded-[15px]" />
         </li>
 
         {servers.servers.map((server: any, idx: number) => {
           return (
             <li
               key={server._id}
-              className={`mb-2 ${idx === 0 && "mt-2"} cursor-pointer`}
-              onClick={() => navigate("/home/server")}
+              className={`mb-2 ${idx === 0 && "mt-2"}`}
+              onClick={() => navigate(`/home/server/${server._id}`)}
             >
               {server.image !== null ? (
                 <img
                   src={server.image}
                   alt="image"
-                  className="w-[48px] aspect-square rounded-full"
+                  className="w-[48px] aspect-square rounded-[30px] cursor-pointer ease-out duration-200 hover:rounded-[15px] "
                 />
               ) : (
-                <div className="w-[48px] aspect-square rounded-full bg-[#313338] flex items-center justify-center">
+                <div className="w-[48px] aspect-square rounded-full bg-[#313338] flex items-center justify-center cursor-pointer">
                   <span className="text-white text-[18px]">ES</span>
                 </div>
               )}

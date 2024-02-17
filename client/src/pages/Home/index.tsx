@@ -26,7 +26,7 @@ const Home = () => {
       <div className="w-[240px] h-full relative">
         
         <Routes>
-          <Route path="/server" element={<ServerChatSidebar />} />
+          <Route path="/server/:_serverId" element={<ServerChatSidebar />} />
           <Route path="*" element={<DirectMessageSideBar />} />
         </Routes>
         
@@ -42,7 +42,7 @@ const Home = () => {
         <Routes>
           <Route path="/message-request" element={<MessageRequestChannel />} />
           <Route path="/message/:_chatId" element={<MessageChannel />} />
-          <Route path="/server" element={<ServerMessageChannel />} />
+          <Route path="/server/:_serverId" element={<ServerMessageChannel />} />
         </Routes>
       </div>
     </div>
