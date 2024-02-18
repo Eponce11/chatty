@@ -1,21 +1,27 @@
+import { useParams } from "react-router-dom";
 import { useRef } from "react";
 import { Header, ServerMembersSidePanel } from ".";
 import { DefaultProfileSvg, AddSvg, SendSvg } from "../../../common/static/svg";
-
+import { useGetOneServerChatQuery } from "../../../api/serverChatApiSlice";
 
 const ServerMessageChannel = () => {
 
-  const isLoading = false;
+  const { _channelId } = useParams();
   const chatInfo = { username: "Username", userProfilePicture: null }
   const messages: any[] = []
   const placeHolderBottom = useRef<any>();
   const profilePicture = null;
   const username = "SignedInUserUsername"
 
+
+  const { currentData: serverChatData, isLoading } = useGetOneServerChatQuery(_channelId);
+
+
+
   return isLoading ? null : (
     <div className="w-full h-full relative">
       <Header
-        title={`${chatInfo.username}`}
+        title={`${serverChatData.title}`}
         image={chatInfo.userProfilePicture}
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
@@ -75,7 +81,7 @@ const ServerMessageChannel = () => {
               <input
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
-                placeholder={`Message @${chatInfo.username}`}
+                placeholder={`Message @${serverChatData.title}`}
               />
               <SendSvg  />
             </div>

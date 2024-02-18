@@ -8,7 +8,7 @@ export const serverChatApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getOneChat: builder.query<any, any>({
+    getOneServerChat: builder.query<any, any>({
       query: (id: string) => ({
         url: `/serverChat/getOne/${id}`,
         method: "GET",
@@ -17,5 +17,5 @@ export const serverChatApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllServerChatsQuery, useGetOneChatQuery } =
+export const { useGetAllServerChatsQuery, useGetOneServerChatQuery } =
   serverChatApiSlice;

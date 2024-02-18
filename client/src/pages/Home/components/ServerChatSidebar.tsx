@@ -1,10 +1,11 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useGetAllServerChatsQuery } from "../../../api/serverChatApiSlice";
 
 const ServerChatSidebar = () => {
   const { _serverId } = useParams();
   const { currentData: serverData, isLoading } =
     useGetAllServerChatsQuery(_serverId);
+  const navigate = useNavigate();
 
   return (
     <div className="h-full w-full bg-[#2B2D31]">
@@ -27,6 +28,7 @@ const ServerChatSidebar = () => {
                 <li
                   className="w-full h-[35px] mb-[2px] flex items-center px-2 rounded-sm hover:bg-[#34363b] hover:text-[white] cursor-pointer"
                   key={channel._id}
+                  onClick={() => navigate(`/home/server/${_serverId}/${channel._id}`)}
                 >
                   <div className="bg-[blue] h-5 aspect-square mr-2 rounded-sm" />
                   <span>{channel.title}</span>

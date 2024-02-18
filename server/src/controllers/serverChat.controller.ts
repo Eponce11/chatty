@@ -31,8 +31,6 @@ export const getAllServerChats = asyncHandler(
     if (!server) {
       return res.sendStatus(400);
     }
-
-    console.log(server);
     return res.json({
       _id: server._id,
       title: server.title,
@@ -53,6 +51,6 @@ export const getOneChat = asyncHandler(
     }
 
     console.log(serverChat);
-    return res.json({ ...serverChat });
+    return res.json({ _id: serverChat._id, title: serverChat.title });
   }
 );
