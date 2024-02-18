@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
-import ServerChat, {
-  ServerChat as ServerChatInterface,
-} from "../models/serverChat.model";
+import ServerChat from "../models/serverChat.model";
 import Server from "../models/server.model";
+import { ServerChat as ServerChatInterface } from "../models/serverChat.model";
 
 export const createServerChat = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -26,13 +25,18 @@ export const createServerChat = asyncHandler(
 export const getAllServerChats = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { _id } = req.params;
-    const server = Server.findById({ _id }).populate<{
+    const server = await Server.findById({ _id: _id }).populate<{
       textChannels: ServerChatInterface[];
-    }>("serverChats");
+    }>("textChannels");
     if (!server) {
       return res.sendStatus(400);
     }
 
-    return res.json({ ...server })
+    console.log(server);
+    return res.json({
+      _id: server._id,
+      title: server.title,
+      textChannels: server.textChannels,
+    });
   }
 );

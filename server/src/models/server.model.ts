@@ -26,7 +26,13 @@ const ServerSchema = new Schema<Server>(
         required: true,
       },
     ],
-    textChannels: [],
+    textChannels: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "ServerChat",
+        required: true,
+      },
+    ],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
     }, // needs to create new model
