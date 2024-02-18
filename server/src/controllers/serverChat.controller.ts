@@ -40,3 +40,19 @@ export const getAllServerChats = asyncHandler(
     });
   }
 );
+
+export const getOneChat = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { _id } = req.params;
+
+    const serverChat = await ServerChat.findById({ _id });
+    // need to populate the messages
+
+    if (!serverChat) {
+      return res.sendStatus(400);
+    }
+
+    console.log(serverChat);
+    return res.json({ ...serverChat });
+  }
+);
