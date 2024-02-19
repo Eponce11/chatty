@@ -3,7 +3,7 @@ import mongoose, { Schema, model } from "mongoose";
 interface ServerMessage {
   _id: mongoose.Schema.Types.ObjectId;
   text: string;
-  server: mongoose.Schema.Types.ObjectId;
+  serverChat: mongoose.Schema.Types.ObjectId;
   sender: mongoose.Schema.Types.ObjectId;
 }
 
@@ -13,9 +13,9 @@ const ServerMessageSchema = new Schema<ServerMessage>(
       type: String,
       required: true,
     },
-    server: {
+    serverChat: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Server",
+      ref: "ServerChat",
       required: true,
     },
     sender: {

@@ -12,6 +12,7 @@ import dmChatRoutes from "./routes/dmChat.routes";
 import serverRoutes from "./routes/server.routes";
 import serverChatRoutes from "./routes/serverChat.routes";
 import s3Routes from "./routes/s3.routes";
+import serverMessageRoutes from "./routes/serverMessage.routes";
 import webSocket from "./webSocket";
 
 const app: Application = express();
@@ -37,6 +38,7 @@ dmChatRoutes(app);
 s3Routes(app);
 serverRoutes(app);
 serverChatRoutes(app);
+serverMessageRoutes(app);
 
 const server = app.listen(PORT, () =>
   console.log(`Listening on port: ${PORT}`)
