@@ -6,6 +6,8 @@ import ServerChat from "../models/serverChat.model";
 export const createServerMessage = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { from, message, channelId } = req.body;
+
+    console.log(from, message, channelId)
     const newServerMessage = await ServerMessage.create({
       text: message,
       sender: from,

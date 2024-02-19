@@ -1,22 +1,37 @@
 import { useParams } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Header, ServerMembersSidePanel } from ".";
 import { DefaultProfileSvg, AddSvg, SendSvg } from "../../../common/static/svg";
 import { useGetOneServerChatQuery } from "../../../api/serverChatApiSlice";
+import { useCreateServerMessageMutation } from "../../../api/serverMessageApiSlice";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
 
 const ServerMessageChannel = () => {
-
   const { _channelId } = useParams();
-  const chatInfo = { username: "Username", userProfilePicture: null }
-  const messages: any[] = []
+  const chatInfo = { username: "Username", userProfilePicture: null };
+  const messages: any[] = [];
   const placeHolderBottom = useRef<any>();
   const profilePicture = null;
-  const username = "SignedInUserUsername"
+  const username = "SignedInUserUsername";
 
+  const [message, setMessage] = useState<string>("");
+  const { currentData: serverChatData, isLoading } =
+    useGetOneServerChatQuery(_channelId);
+  const [createServerMessage] = useCreateServerMessageMutation();
+  const userId = useAppSelector(selectAuthId);
 
-  const { currentData: serverChatData, isLoading } = useGetOneServerChatQuery(_channelId);
-
-
+  const handleNewMessage = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+    if (!userId) return;
+    const data = {
+      channelId: _channelId,
+      from: userId,
+      message: message,
+    };
+    const res = await createServerMessage(data).unwrap();
+    console.log(res);
+  };
 
   return isLoading ? null : (
     <div className="w-full h-full relative">
@@ -26,7 +41,10 @@ const ServerMessageChannel = () => {
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
-          <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto" ref={placeHolderBottom}>
+          <section
+            className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto"
+            ref={placeHolderBottom}
+          >
             {messages.map((message: any, idx: number) => {
               return idx !== 0 &&
                 messages[idx - 1].fromSelf === message.fromSelf ? (
@@ -82,16 +100,18 @@ const ServerMessageChannel = () => {
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
                 placeholder={`Message @${serverChatData.title}`}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setMessage(e.target.value)
+                }
               />
-              <SendSvg  />
+              <SendSvg handleNewMessage={handleNewMessage} />
             </div>
           </section>
         </div>
-        <ServerMembersSidePanel/>
+        <ServerMembersSidePanel />
       </div>
     </div>
   );
 };
-
 
 export default ServerMessageChannel;
