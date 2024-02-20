@@ -3,26 +3,26 @@ import { useRef, useState, useEffect } from "react";
 import { Header, ServerMembersSidePanel } from ".";
 import { DefaultProfileSvg, AddSvg, SendSvg } from "../../../common/static/svg";
 import { useGetOneServerChatMutation } from "../../../api/serverChatApiSlice";
-import {
-  useCreateServerMessageMutation
-} from "../../../api/serverMessageApiSlice";
+import { useCreateServerMessageMutation } from "../../../api/serverMessageApiSlice";
 import { useAppSelector } from "../../../app/hooks";
 import {
   selectAuthId,
   selectAuthUsername,
 } from "../../../app/features/authSlice";
+import { useGetOneServerMutation } from "../../../api/serverApiSlice";
 
 const ServerMessageChannel = () => {
   const chatInfo = { username: "Username", userProfilePicture: null };
   const placeHolderBottom = useRef<any>();
   const profilePicture = null;
   const messages: any = [];
-  const { _channelId } = useParams();
+  const { _channelId, _serverId } = useParams();
 
   const [message, setMessage] = useState<string>("");
   const [channelMessages, setChannelMessages] = useState<any>([]);
   const [getOneServerChat] = useGetOneServerChatMutation();
   const [createServerMessage] = useCreateServerMessageMutation();
+  const [getOneServer] = useGetOneServerMutation();
   const userId = useAppSelector(selectAuthId);
   const username = useAppSelector(selectAuthUsername);
 
@@ -47,12 +47,14 @@ const ServerMessageChannel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-
+        const res = await getOneServer(_serverId).unwrap();
+        console.log(res);
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
-  }, [])
+    };
+    fetchData();
+  }, [_serverId]);
 
   const handleNewMessage = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();

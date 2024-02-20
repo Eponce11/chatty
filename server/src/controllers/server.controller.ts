@@ -78,8 +78,20 @@ export const getUserServers = asyncHandler(
         };
       })
     );
-    
+
     console.log(response);
     return res.json({ servers: [...response] });
+  }
+);
+
+export const getOneServer = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { serverId } = req.body;
+
+    const server = await Server.findById({ _id: serverId });
+    if (!server) res.sendStatus(400);
+    console.log(server);
+
+    return res.json({ _id: server?._id, members: server?.members });
   }
 );

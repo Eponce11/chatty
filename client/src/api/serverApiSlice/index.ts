@@ -22,7 +22,18 @@ export const serverApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
+    getOneServer: builder.mutation<any, any>({
+      query: (serverId: string) => ({
+        url: "/server/getOne",
+        method: "POST",
+        body: { serverId: serverId },
+      }),
+    }),
   }),
 });
 
-export const { useCreateServerMutation, useGetServersQuery } = serverApiSlice;
+export const {
+  useCreateServerMutation,
+  useGetServersQuery,
+  useGetOneServerMutation,
+} = serverApiSlice;
