@@ -21,11 +21,7 @@ export const createServerMessage = asyncHandler(
       { $push: { messages: newServerMessage._id } }
     )
       .then((serverChat) => {
-        return res.json({
-          _id: newServerMessage._id,
-          text: newServerMessage.text,
-          fromSelf: true,
-        });
+        return res.json(newServerMessage);
       })
       .catch((err) => res.status(400).json({ err }));
   }

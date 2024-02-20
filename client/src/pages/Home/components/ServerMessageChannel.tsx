@@ -15,7 +15,6 @@ const ServerMessageChannel = () => {
   const chatInfo = { username: "Username", userProfilePicture: null };
   const placeHolderBottom = useRef<any>();
   const profilePicture = null;
-  const messages: any = [];
   const { _channelId, _serverId } = useParams();
 
   const [message, setMessage] = useState<string>("");
@@ -26,7 +25,7 @@ const ServerMessageChannel = () => {
   const userId = useAppSelector(selectAuthId);
   const username = useAppSelector(selectAuthUsername);
 
-  const [serverData, setServerData] = useState<any>({});
+  const [members, setMembers] = useState<any>([]);
   const [channelData, setChannelData] = useState<any>({ title: "" });
   const isLoading = false;
 
@@ -49,6 +48,17 @@ const ServerMessageChannel = () => {
       try {
         const res = await getOneServer(_serverId).unwrap();
         console.log(res);
+
+        const membersObj: any = {};
+
+        for (const member of res.members) {
+          membersObj[member._id] = {
+            username: member.username,
+            profilePicture: member.profilePicture,
+          };
+        }
+        setMembers(membersObj);
+        console.log(membersObj);
       } catch (err) {
         console.log(err);
       }
@@ -65,6 +75,7 @@ const ServerMessageChannel = () => {
       message: message,
     };
     const res = await createServerMessage(data).unwrap();
+    setChannelMessages((prev: any[]) => [...prev, res]);
     console.log(res);
   };
 
@@ -80,14 +91,14 @@ const ServerMessageChannel = () => {
             className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto"
             ref={placeHolderBottom}
           >
-            {messages.map((message: any, idx: number) => {
+            {channelMessages.map((message: any, idx: number) => {
               return idx !== 0 &&
-                messages[idx - 1].fromSelf === message.fromSelf ? (
+                channelMessages[idx - 1].sender === message.sender ? (
                 <div
                   className={`flex ${
-                    idx === messages.length - 1 ? "mb-3" : null
+                    idx === channelMessages.length - 1 ? "mb-3" : null
                   }`}
-                  key={message.messageId}
+                  key={message._id}
                 >
                   <div className="w-[40px] rounded-full mr-3 mb-4" />
                   <p className="text-[#C1C5C7]">{message.text}</p>
@@ -95,11 +106,11 @@ const ServerMessageChannel = () => {
               ) : (
                 <div
                   className={`flex mt-5 ${
-                    idx === messages.length - 1 ? "mb-5" : null
+                    idx === channelMessages.length - 1 ? "mb-5" : null
                   }`}
-                  key={message.messageId}
+                  key={message._id}
                 >
-                  {message.fromSelf ? (
+                  {message.sender === userId ? (
                     profilePicture === null ? (
                       <DefaultProfileSvg className="w-[40px] h-[40px] mr-3" />
                     ) : (
@@ -109,18 +120,20 @@ const ServerMessageChannel = () => {
                         className="w-[40px] h-[40px] mr-3 rounded-full"
                       />
                     )
-                  ) : chatInfo.userProfilePicture === null ? (
+                  ) : members[message.sender].profilePicture === null ? (
                     <DefaultProfileSvg className="w-[40px] h-[40px] mr-3" />
                   ) : (
                     <img
-                      src={chatInfo.userProfilePicture}
+                      src={members[message.sender].profilePicture}
                       alt="profile picture"
                       className="w-[40px] h-[40px] mr-3 rounded-full"
                     />
                   )}
                   <div>
                     <span className="text-[#CBCBCE] font-semibold">
-                      {message.fromSelf ? username : chatInfo.username}
+                      {message.sender === userId
+                        ? username
+                        : members[message.sender].username}
                     </span>
                     <p className="text-[#C1C5C7]">{message.text}</p>
                   </div>

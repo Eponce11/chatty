@@ -4,6 +4,7 @@ import Server from "../models/server.model";
 import ServerChat from "../models/serverChat.model";
 import { uploadImage, getImage } from "./s3.controller";
 import User from "../models/user.model";
+import { User as UserInterface } from "../models/user.model";
 import { Server as ServerInterface } from "../models/server.model";
 
 export const createServer = asyncHandler(
@@ -88,10 +89,29 @@ export const getOneServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { serverId } = req.body;
 
-    const server = await Server.findById({ _id: serverId });
-    if (!server) res.sendStatus(400);
+    const server = await Server.findById({ _id: serverId }).populate<{
+      members: UserInterface[];
+    }>("members");
+
+    if (!server) return res.sendStatus(400);
+
+    const members = await Promise.all(
+      server.members.map(async (member) => {
+        const profilePicture =
+          member.profilePicture === null
+            ? null
+            : await getImage(member.profilePicture);
+
+        return {
+          _id: member._id,
+          username: member.username,
+          profilePicture: profilePicture,
+        };
+      })
+    );
+
     console.log(server);
 
-    return res.json({ _id: server?._id, members: server?.members });
+    return res.json({ _id: server?._id, members: members });
   }
 );
