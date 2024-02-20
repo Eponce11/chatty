@@ -17,7 +17,7 @@ const ServerChatSchema = new Schema<ServerChat>(
     messages: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Message",
+        ref: "ServerMessage",
         required: true,
       },
     ],

@@ -8,14 +8,15 @@ export const serverChatApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
     }),
-    getOneServerChat: builder.query<any, any>({
-      query: (id: string) => ({
-        url: `/serverChat/getOne/${id}`,
-        method: "GET",
+    getOneServerChat: builder.mutation<any, any>({
+      query: (channelId: string) => ({
+        url: `/serverChat/getOne`,
+        method: "POST",
+        body: { channelId: channelId },
       }),
     }),
   }),
 });
 
-export const { useGetAllServerChatsQuery, useGetOneServerChatQuery } =
+export const { useGetAllServerChatsQuery, useGetOneServerChatMutation } =
   serverChatApiSlice;

@@ -3,6 +3,7 @@ import asyncHandler from "express-async-handler";
 import ServerChat from "../models/serverChat.model";
 import Server from "../models/server.model";
 import { ServerChat as ServerChatInterface } from "../models/serverChat.model";
+import { ServerMessage as ServerMessageInterface } from "../models/serverMessage.model";
 
 export const createServerChat = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
@@ -41,16 +42,20 @@ export const getAllServerChats = asyncHandler(
 
 export const getOneChat = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
-    const { _id } = req.params;
+    const { channelId } = req.body;
+    const serverChat = await ServerChat.findById({ _id: channelId })
+      .populate<{
+        messages: ServerMessageInterface[];
+      }>("messages")
+      .sort("messages");
 
-    const serverChat = await ServerChat.findById({ _id });
-    // need to populate the messages
-
-    if (!serverChat) {
-      return res.sendStatus(400);
-    }
+    if (!serverChat) return res.sendStatus(400);
 
     console.log(serverChat);
-    return res.json({ _id: serverChat._id, title: serverChat.title });
+    return res.json({
+      _id: serverChat._id,
+      title: serverChat.title,
+      messages: serverChat.messages,
+    });
   }
 );

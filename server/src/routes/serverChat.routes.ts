@@ -8,7 +8,7 @@ import {
 const serverChatRoutes = (app: Application) => {
   app.post("/api/server/create", createServerChat);
   app.get("/api/serverChat/getAllChats/:_id", getAllServerChats);
-  app.get("/api/serverChat/getOne/:_id", getOneChat);
+  app.post("/api/serverChat/getOne", getOneChat);
 };
 
 export default serverChatRoutes;

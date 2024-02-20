@@ -30,19 +30,3 @@ export const createServerMessage = asyncHandler(
       .catch((err) => res.status(400).json({ err }));
   }
 );
-
-export const getServerChatMessages = asyncHandler(
-  async (req: Request, res: Response): Promise<any> => {
-    const { channelId } = req.body;
-
-    const serverChat = await ServerChat.findById({ _id: channelId })
-      .populate<{
-        messages: ServerMessageInterface[];
-      }>("messages")
-      .sort("messages");
-
-    if (!serverChat) return res.sendStatus(400);
-
-    return res.json({ messages: serverChat.messages });
-  }
-);

@@ -1,25 +1,58 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Header, ServerMembersSidePanel } from ".";
 import { DefaultProfileSvg, AddSvg, SendSvg } from "../../../common/static/svg";
-import { useGetOneServerChatQuery } from "../../../api/serverChatApiSlice";
-import { useCreateServerMessageMutation } from "../../../api/serverMessageApiSlice";
+import { useGetOneServerChatMutation } from "../../../api/serverChatApiSlice";
+import {
+  useCreateServerMessageMutation
+} from "../../../api/serverMessageApiSlice";
 import { useAppSelector } from "../../../app/hooks";
-import { selectAuthId } from "../../../app/features/authSlice";
+import {
+  selectAuthId,
+  selectAuthUsername,
+} from "../../../app/features/authSlice";
 
 const ServerMessageChannel = () => {
-  const { _channelId } = useParams();
   const chatInfo = { username: "Username", userProfilePicture: null };
-  const messages: any[] = [];
   const placeHolderBottom = useRef<any>();
   const profilePicture = null;
-  const username = "SignedInUserUsername";
+  const messages: any = [];
+  const { _channelId } = useParams();
 
   const [message, setMessage] = useState<string>("");
-  const { currentData: serverChatData, isLoading } =
-    useGetOneServerChatQuery(_channelId);
+  const [channelMessages, setChannelMessages] = useState<any>([]);
+  const [getOneServerChat] = useGetOneServerChatMutation();
   const [createServerMessage] = useCreateServerMessageMutation();
   const userId = useAppSelector(selectAuthId);
+  const username = useAppSelector(selectAuthUsername);
+
+  const [serverData, setServerData] = useState<any>({});
+  const [channelData, setChannelData] = useState<any>({ title: "" });
+  const isLoading = false;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await getOneServerChat(_channelId).unwrap();
+        console.log(res);
+        setChannelData({ title: res.title });
+        setChannelMessages([...res.messages]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchData();
+  }, [_channelId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }, [])
 
   const handleNewMessage = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
@@ -36,7 +69,7 @@ const ServerMessageChannel = () => {
   return isLoading ? null : (
     <div className="w-full h-full relative">
       <Header
-        title={`${serverChatData.title}`}
+        title={`${channelData.title}`}
         image={chatInfo.userProfilePicture}
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
@@ -99,7 +132,7 @@ const ServerMessageChannel = () => {
               <input
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
-                placeholder={`Message @${serverChatData.title}`}
+                placeholder={`Message @${channelData.title}`}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setMessage(e.target.value)
                 }
