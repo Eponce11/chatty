@@ -9,17 +9,25 @@ export const createServerChat = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { title, serverId } = req.body;
 
-    ServerChat.create({
-      title: title,
-      messages: [],
-      serverId: serverId,
-    })
-      .then((newServerChat) => {
-        return res.json({ Msg: "Success" });
-      })
-      .catch((err) => {
-        return res.status(400).json(err);
+    let serverChat;
+
+    try {
+      serverChat = await ServerChat.create({
+        title: title,
+        messages: [],
+        serverId: serverId,
       });
+    } catch (err) {
+      return res.status(400).json(err);
+    }
+
+    await Server.findByIdAndUpdate(
+      { _id: serverId },
+      { $push: { textChannels: serverChat._id } },
+      { new: true }
+    );
+
+    return res.json({ _id: serverChat._id, title: serverChat.title });
   }
 );
 

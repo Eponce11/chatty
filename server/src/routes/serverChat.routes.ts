@@ -6,7 +6,7 @@ import {
 } from "../controllers/serverChat.controller";
 
 const serverChatRoutes = (app: Application) => {
-  app.post("/api/server/create", createServerChat);
+  app.post("/api/serverChat/create", createServerChat);
   app.get("/api/serverChat/getAllChats/:_id", getAllServerChats);
   app.post("/api/serverChat/getOne", getOneChat);
 };

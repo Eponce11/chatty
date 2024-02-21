@@ -1,7 +1,28 @@
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { CancelSvg } from "../../../common/static/svg";
+import { useCreateServerChatMutation } from "../../../api/serverChatApiSlice";
 
 const CreateTextChannel = (props: any) => {
   const { setIsCreateChannelOpen } = props;
+  const { _serverId } = useParams();
+  const [createServerChat] = useCreateServerChatMutation();
+  const [channelName, setChannelName] = useState<string>("");
+
+  const handleSubmitNewServerChat = async (
+    e: React.MouseEvent<HTMLElement>
+  ) => {
+    e.preventDefault();
+    try {
+      const res = await createServerChat({
+        title: channelName,
+        serverId: _serverId,
+      }).unwrap();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="bg-[black] w-screen h-screen fixed top-0 left-0 z-10 flex items-center justify-center bg-opacity-70">
@@ -28,6 +49,8 @@ const CreateTextChannel = (props: any) => {
               type="text"
               className="w-full h-[40px] bg-[#1E1F22] text-[#F2F3F5] outline-none pl-2 rounded-sm mt-1"
               placeholder="new-channel"
+              value={channelName}
+              onChange={(e) => setChannelName(e.target.value)}
             />
           </div>
         </div>
@@ -38,7 +61,10 @@ const CreateTextChannel = (props: any) => {
           >
             Cancel
           </span>
-          <button className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2">
+          <button
+            className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2"
+            onClick={handleSubmitNewServerChat}
+          >
             Create Channel
           </button>
         </div>

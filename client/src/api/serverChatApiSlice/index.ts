@@ -15,8 +15,18 @@ export const serverChatApiSlice = apiSlice.injectEndpoints({
         body: { channelId: channelId },
       }),
     }),
+    createServerChat: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: "/serverChat/create",
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
-export const { useGetAllServerChatsQuery, useGetOneServerChatMutation } =
-  serverChatApiSlice;
+export const {
+  useGetAllServerChatsQuery,
+  useGetOneServerChatMutation,
+  useCreateServerChatMutation,
+} = serverChatApiSlice;
