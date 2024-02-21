@@ -13,6 +13,7 @@ import JoinServer from "./JoinServer";
 import ServerChatSidebar from "./ServerChatSidebar";
 import ServerMembersSidePanel from "./ServerMembersSidePanel";
 import ServerMessageChannel from "./ServerMessageChannel";
+import CreateTextChannel from "./CreateTextChannel";
 
 export {
   ServerSelect,
@@ -30,4 +31,5 @@ export {
   ServerChatSidebar,
   ServerMembersSidePanel,
   ServerMessageChannel,
+  CreateTextChannel,
 };
