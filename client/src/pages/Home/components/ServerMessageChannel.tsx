@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { Header, ServerMembersSidePanel } from ".";
-import { DefaultProfileSvg, AddSvg, SendSvg } from "../../../common/static/svg";
+import { DefaultProfileSvg, AddSvg, SendSvg, HashTag } from "../../../common/static/svg";
 import { useGetOneServerChatMutation } from "../../../api/serverChatApiSlice";
 import { useCreateServerMessageMutation } from "../../../api/serverMessageApiSlice";
 import { useAppSelector } from "../../../app/hooks";
@@ -83,7 +83,7 @@ const ServerMessageChannel = () => {
     <div className="w-full h-full relative">
       <Header
         title={`${channelData.title}`}
-        image={chatInfo.userProfilePicture}
+        Icon="HASHTAG"
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">

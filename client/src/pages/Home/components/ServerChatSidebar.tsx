@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useGetAllServerChatsQuery } from "../../../api/serverChatApiSlice";
 import { CreateTextChannel } from ".";
+import { HashTag } from "../../../common/static/svg";
 
 const ServerChatSidebar = () => {
   const { _serverId } = useParams();
@@ -41,8 +42,8 @@ const ServerChatSidebar = () => {
                     navigate(`/home/server/${_serverId}/${channel._id}`)
                   }
                 >
-                  <div className="bg-[blue] h-5 aspect-square mr-2 rounded-sm" />
-                  <span>{channel.title}</span>
+                  <HashTag />
+                  <span className="ml-1">{channel.title}</span>
                 </li>
               );
             })}
