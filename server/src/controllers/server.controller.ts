@@ -7,6 +7,16 @@ import User from "../models/user.model";
 import { User as UserInterface } from "../models/user.model";
 import { Server as ServerInterface } from "../models/server.model";
 
+const makeInviteCode = (): string => {
+  const characters =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let result = "";
+  for (let i = 0; i < 6; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+};
+
 export const createServer = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { title, userId } = req.body;
@@ -25,6 +35,7 @@ export const createServer = asyncHandler(
         members: [userId],
         textChannels: [],
         owner: userId,
+        inviteCode: makeInviteCode(),
       });
     } catch (err) {
       return res.status(400).json(err);

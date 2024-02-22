@@ -7,6 +7,7 @@ export interface Server {
   members: mongoose.Schema.Types.ObjectId[];
   textChannels: mongoose.Schema.Types.ObjectId[];
   owner: mongoose.Schema.Types.ObjectId;
+  inviteCode: string;
 }
 
 const ServerSchema = new Schema<Server>(
@@ -35,7 +36,13 @@ const ServerSchema = new Schema<Server>(
     ],
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-    }, // needs to create new model
+    },
+    inviteCode: {
+      type: String,
+      required: true,
+      minLength: 6,
+      maxLength: 6,
+    },
   },
   { timestamps: true }
 );
