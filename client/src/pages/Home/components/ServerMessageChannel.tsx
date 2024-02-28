@@ -13,13 +13,13 @@ import { useAppSelector } from "../../../app/hooks";
 import {
   selectAuthId,
   selectAuthUsername,
+  selectAuthProfilePicture,
 } from "../../../app/features/authSlice";
 import { useGetOneServerMutation } from "../../../api/serverApiSlice";
 
 const ServerMessageChannel = () => {
   const chatInfo = { username: "Username", userProfilePicture: null };
   const placeHolderBottom = useRef<any>();
-  const profilePicture = null;
   const { _channelId, _serverId } = useParams();
 
   const [message, setMessage] = useState<string>("");
@@ -29,6 +29,7 @@ const ServerMessageChannel = () => {
   const [getOneServer] = useGetOneServerMutation();
   const userId = useAppSelector(selectAuthId);
   const username = useAppSelector(selectAuthUsername);
+  const profilePicture = useAppSelector(selectAuthProfilePicture);
 
   const [members, setMembers] = useState<any>([]);
   const [channelData, setChannelData] = useState<any>({ title: "" });
