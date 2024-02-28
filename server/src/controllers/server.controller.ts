@@ -126,3 +126,39 @@ export const getOneServer = asyncHandler(
     return res.json({ _id: server?._id, members: members });
   }
 );
+
+export const joinServer = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { inviteCode, userId } = req.body;
+
+    const userInServer = await Server.findOne({
+      inviteCode: inviteCode,
+      members: { $in: [userId] },
+    });
+
+    const server = await Server.findOneAndUpdate(
+      { inviteCode: inviteCode },
+      { $push: { members: userId } },
+      { new: true }
+    );
+
+    if (!server) return res.sendStatus(400);
+
+    const user = await User.findByIdAndUpdate(
+      { _id: userId },
+      { $push: { servers: server._id } },
+      { new: true }
+    );
+
+    if (!user) return res.sendStatus(400);
+
+    const serverImage =
+      server.image === null ? null : await getImage(server.image);
+
+    return res.json({
+      _id: server._id,
+      title: server.title,
+      image: serverImage,
+    });
+  }
+);

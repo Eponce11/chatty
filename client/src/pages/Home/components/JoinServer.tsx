@@ -1,8 +1,28 @@
 import { useState } from "react";
+import { useAppSelector } from "../../../app/hooks";
+import { selectAuthId } from "../../../app/features/authSlice";
+import { useJoinServerMutation } from "../../../api/serverApiSlice";
 
 const JoinServer = (props: any) => {
   const { setCurrentSection } = props;
+  const userId = useAppSelector(selectAuthId);
   const [inviteLink, setInviteLink] = useState<string>("");
+  const [joinServer] = useJoinServerMutation();
+
+  const handleJoinServer = async (
+    e: React.MouseEvent<HTMLElement>
+  ): Promise<void> => {
+    e.preventDefault();
+    try {
+      const res = await joinServer({
+        inviteCode: inviteLink,
+        userId: userId,
+      }).unwrap();
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -23,7 +43,7 @@ const JoinServer = (props: any) => {
             className="w-full h-[40px] bg-[#1E1F22] text-[#F2F3F5] outline-none pl-2 rounded-sm mt-1"
             value={inviteLink}
             onChange={(e) => setInviteLink(e.target.value)}
-            placeholder="hTKzmak"
+            placeholder="4ZkIMR"
           />
         </div>
         <div className="w-full text-left mt-3">
@@ -31,13 +51,13 @@ const JoinServer = (props: any) => {
             INVITES SHOULD LOOK LIKE
           </p>
           <p className="text-[#ffffff] text-[13px] tracking-wide text-left">
-            hTKzmak
+            4tgnNR
           </p>
           <p className="text-[#ffffff] text-[13px] tracking-wide text-left my-1">
-            qVerMw
+            I6k3De
           </p>
           <p className="text-[#ffffff] text-[13px] tracking-wide text-left">
-            PSciRwz
+            jxvaJZ
           </p>
         </div>
       </div>
@@ -51,7 +71,10 @@ const JoinServer = (props: any) => {
         >
           Back
         </span>
-        <button className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2">
+        <button
+          className="bg-[#5865F2] text-white rounded-sm hover:bg-[#64656d] px-4 py-2"
+          onClick={handleJoinServer}
+        >
           Join Server
         </button>
       </div>

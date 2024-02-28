@@ -29,6 +29,13 @@ export const serverApiSlice = apiSlice.injectEndpoints({
         body: { serverId: serverId },
       }),
     }),
+    joinServer: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: "/server/join",
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
@@ -36,4 +43,5 @@ export const {
   useCreateServerMutation,
   useGetServersQuery,
   useGetOneServerMutation,
+  useJoinServerMutation,
 } = serverApiSlice;
