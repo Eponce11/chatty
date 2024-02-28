@@ -1,7 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { Header, ServerMembersSidePanel } from ".";
-import { DefaultProfileSvg, AddSvg, SendSvg, HashTag } from "../../../common/static/svg";
+import {
+  DefaultProfileSvg,
+  AddSvg,
+  SendSvg,
+  HashTag,
+} from "../../../common/static/svg";
 import { useGetOneServerChatMutation } from "../../../api/serverChatApiSlice";
 import { useCreateServerMessageMutation } from "../../../api/serverMessageApiSlice";
 import { useAppSelector } from "../../../app/hooks";
@@ -27,7 +32,7 @@ const ServerMessageChannel = () => {
 
   const [members, setMembers] = useState<any>([]);
   const [channelData, setChannelData] = useState<any>({ title: "" });
-  const isLoading = false;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +50,7 @@ const ServerMessageChannel = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const res = await getOneServer(_serverId).unwrap();
         console.log(res);
@@ -61,6 +67,8 @@ const ServerMessageChannel = () => {
         console.log(membersObj);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -81,10 +89,7 @@ const ServerMessageChannel = () => {
 
   return isLoading ? null : (
     <div className="w-full h-full relative">
-      <Header
-        title={`${channelData.title}`}
-        Icon="HASHTAG"
-      />
+      <Header title={`${channelData.title}`} Icon="HASHTAG" />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section
