@@ -13,14 +13,15 @@ import {
 import { SendSvg, AddSvg, DefaultProfileSvg } from "../../../common/static/svg";
 import { Header, UserSidePanel, ServerMembersSidePanel } from ".";
 import { NewMessageResponse } from "../../../api/messageApiSlice/types";
-import { io } from "socket.io-client";
 interface ChatInfo {
   userId: string;
   username: string;
   userProfilePicture: string | null;
 }
 
-const MessageChannel = () => {
+const MessageChannel = (props: any) => {
+  const { socket } = props;
+
   const [message, setMessage] = useState<string>("");
   const [createMessage] = useCreateMessageMutation();
   const { _chatId } = useParams();
@@ -35,7 +36,6 @@ const MessageChannel = () => {
     userProfilePicture: null,
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
-  const [socket] = useState(() => io(":8000"));
   const placeHolderBottom = useRef<any>();
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const MessageChannel = () => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("msg-receive", (messageData) => {
+      socket.on("msg-receive", (messageData: any) => {
         setMessages((prev: NewMessageResponse[]) => [...prev, messageData]);
         console.log(chatInfo);
       });
@@ -94,7 +94,9 @@ const MessageChannel = () => {
       message: res.text,
     });
     console.log(res);
-    placeHolderBottom.current.lastElementChild.scrollIntoView({ behavior: "smooth" });
+    placeHolderBottom.current.lastElementChild.scrollIntoView({
+      behavior: "smooth",
+    });
   };
 
   return isLoading ? null : (
@@ -105,7 +107,10 @@ const MessageChannel = () => {
       />
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
-          <section className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto" ref={placeHolderBottom}>
+          <section
+            className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto"
+            ref={placeHolderBottom}
+          >
             {messages.map((message: any, idx: number) => {
               return idx !== 0 &&
                 messages[idx - 1].fromSelf === message.fromSelf ? (
@@ -170,11 +175,13 @@ const MessageChannel = () => {
             </div>
           </section>
         </div>
-        <UserSidePanel chatUsername={chatInfo.username} chatProfilePicture={chatInfo.userProfilePicture}/>
+        <UserSidePanel
+          chatUsername={chatInfo.username}
+          chatProfilePicture={chatInfo.userProfilePicture}
+        />
       </div>
     </div>
   );
 };
 
 export default MessageChannel;
-

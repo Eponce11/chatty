@@ -1,4 +1,6 @@
-const ServerMembersSidePanel = () => {
+const ServerMembersSidePanel = (props: any) => {
+  const { socket } = props;
+
   const onlineUsers: number[] = [0, 0];
   const offlineUsers: number[] = [0,0,0,0];
 

@@ -17,8 +17,9 @@ import {
 } from "../../../app/features/authSlice";
 import { useGetOneServerMutation } from "../../../api/serverApiSlice";
 
-const ServerMessageChannel = () => {
-  const chatInfo = { username: "Username", userProfilePicture: null };
+const ServerMessageChannel = (props: any) => {
+  const { socket } = props;
+
   const placeHolderBottom = useRef<any>();
   const { _channelId, _serverId } = useParams();
 
@@ -162,7 +163,7 @@ const ServerMessageChannel = () => {
             </div>
           </section>
         </div>
-        <ServerMembersSidePanel />
+        <ServerMembersSidePanel socket={socket} />
       </div>
     </div>
   );
