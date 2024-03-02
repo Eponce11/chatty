@@ -1,8 +1,20 @@
-const ServerMembersSidePanel = (props: any) => {
-  const { socket } = props;
+import { useState, useEffect } from "react";
 
-  const onlineUsers: number[] = [0, 0];
-  const offlineUsers: number[] = [0,0,0,0];
+const ServerMembersSidePanel = (props: any) => {
+  const { socket, members } = props;
+
+  const [onlineUsers, setOnlineUsers] = useState<any>([]);
+  const [offlineUsers, setOfflineUsers] = useState<any>([])
+
+  useEffect(() => {
+    if (socket) {
+      const membersUserId = Object.keys(members);
+      console.log(membersUserId);
+      socket.emit("get-online-users-server", membersUserId, (response: any) => {
+        console.log(response);
+      })
+    }
+  }, [])
 
   return (
     <div className="w-[240px] h-full bg-[#2B2D31] px-2 pt-4">

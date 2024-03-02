@@ -10,7 +10,7 @@ const webSocket = (httpServer: any): any => {
   const onlineUsers: Map<string, string> = new Map();
 
   io.on("connection", (socket) => {
-    console.log(socket.id)
+    console.log(socket.id);
 
     // adds to list of online users
     socket.on("add-user", (userId: string) => {
@@ -20,12 +20,22 @@ const webSocket = (httpServer: any): any => {
     // send message to user
     socket.on("send-msg", (data: any) => {
       const sendUserSocket: any = onlineUsers.get(data.to);
-      console.log(data)
+      console.log(data);
       socket.to(sendUserSocket).emit("msg-receive", {
         messageId: data.messageId,
         text: data.message,
-        fromSelf: false
+        fromSelf: false,
       });
+    });
+
+    socket.on("get-online-users-server", (userIds: any[], callback) => {
+      const serverOnlineUsers = [];
+      for (let userId of userIds) {
+        if (onlineUsers.has(userId)) {
+          serverOnlineUsers.push(userId);
+        }
+      }
+      callback({ onlineUsers: serverOnlineUsers });
     });
   });
 };

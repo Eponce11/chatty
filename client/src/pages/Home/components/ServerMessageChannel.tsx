@@ -163,7 +163,7 @@ const ServerMessageChannel = (props: any) => {
             </div>
           </section>
         </div>
-        <ServerMembersSidePanel socket={socket} />
+        <ServerMembersSidePanel socket={socket} members={members} />
       </div>
     </div>
   );
