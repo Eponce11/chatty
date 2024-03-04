@@ -48,6 +48,10 @@ const ServerMessageChannel = (props: any) => {
       }
     };
     fetchData();
+    socket.emit("join-room", _channelId);
+    return () => {
+      socket.emit("leave-room");
+    }
   }, [_channelId]);
 
   useEffect(() => {
