@@ -90,8 +90,23 @@ const ServerMessageChannel = (props: any) => {
     };
     const res = await createServerMessage(data).unwrap();
     setChannelMessages((prev: any[]) => [...prev, res]);
+    socket.emit("send-server-msg", {
+      _id: res._id,
+      serverChat: _channelId,
+      sender: userId,
+      text: res.text
+    })
     console.log(res);
   };
+
+  useEffect(() => {
+    console.log("Worked")
+    
+      socket.on(`${_channelId}`, (messageData: any) => {
+        setChannelMessages((prev: any[]) => [...prev, messageData]);
+      });
+    
+  }, [socket]);
 
   return isLoading ? null : (
     <div className="w-full h-full relative">

@@ -36,8 +36,15 @@ const webSocket = (httpServer: any): any => {
     });
 
     socket.on("leave-room", () => {
-      socket.leave(currentRoom)
+      socket.leave(currentRoom);
       console.log(`socket ${socket.id} has left room ${currentRoom}`);
+    });
+
+    socket.on("send-server-msg", (data: any) => {
+      console.log(data.serverChat);
+      socket.to(data.serverChat).emit({
+        ...data,
+      });
     });
 
     // send message to user
