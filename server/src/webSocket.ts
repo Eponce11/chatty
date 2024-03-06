@@ -60,12 +60,18 @@ const webSocket = (httpServer: any): any => {
 
     socket.on("get-online-users-server", (userIds: any[], callback) => {
       const serverOnlineUsers = [];
+      const serverOfflineUsers = [];
       for (let userId of userIds) {
         if (onlineUsersKeyUserId.has(userId)) {
           serverOnlineUsers.push(userId);
+        } else {
+          serverOfflineUsers.push(userId);
         }
       }
-      callback({ onlineUsers: serverOnlineUsers });
+      callback({
+        onlineUsers: serverOnlineUsers,
+        offlineUsers: serverOfflineUsers,
+      });
     });
   });
 };
