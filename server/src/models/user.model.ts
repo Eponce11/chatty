@@ -51,7 +51,6 @@ const UserSchema = new Schema<User>(
     },
     profilePicture: {
       type: String || null,
-      required: true,
     },
     servers: [
       {
