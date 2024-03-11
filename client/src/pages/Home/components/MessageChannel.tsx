@@ -161,7 +161,6 @@ const MessageChannel = (props: any) => {
           </section>
           <section className="h-[68px] w-full px-3 bottom-0 absolute">
             <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
-              <AddSvg />
               <input
                 type="text"
                 className="h-full w-full outline-none bg-transparent text-[white]"
