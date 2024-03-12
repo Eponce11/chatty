@@ -81,24 +81,30 @@ const MessageChannel = (props: any) => {
   const handleNewMessage = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     if (!userId) return;
-    const data = {
-      chatId: _chatId,
-      to: chatInfo.userId,
-      from: userId,
-      message: message,
-    };
-    const res: NewMessageResponse = await createMessage(data).unwrap();
-    setMessages((prev: NewMessageResponse[]) => [...prev, res]);
-    socket.emit("send-msg", {
-      messageId: res.messageId,
-      to: chatInfo.userId,
-      message: res.text,
-    });
-    console.log(res);
-    setMessage("");
-    placeHolderBottom.current.lastElementChild.scrollIntoView({
-      behavior: "smooth",
-    });
+    try {
+      const data = {
+        chatId: _chatId,
+        to: chatInfo.userId,
+        from: userId,
+        message: message,
+      };
+      const res: NewMessageResponse = await createMessage(data).unwrap();
+      setMessages((prev: NewMessageResponse[]) => [...prev, res]);
+      socket.emit("send-msg", {
+        messageId: res.messageId,
+        to: chatInfo.userId,
+        message: res.text,
+      });
+      console.log(res);
+      setMessage("");
+    } catch (error) {
+      console.log(error)
+    } finally {
+      placeHolderBottom.current.lastElementChild.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+    
   };
 
   return isLoading ? null : (
@@ -160,6 +166,7 @@ const MessageChannel = (props: any) => {
                 </div>
               );
             })}
+            <p className="h-[12px] w-[10px]" />
           </section>
           <section className="h-[68px] w-full px-3 bottom-0 absolute">
             <div className="h-[44px] w-full bg-[#383A40] px-4 rounded-lg flex items-center">
