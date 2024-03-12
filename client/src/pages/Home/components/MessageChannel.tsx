@@ -37,6 +37,7 @@ const MessageChannel = (props: any) => {
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
   const placeHolderBottom = useRef<any>();
+  const messageRef = useRef<any>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -94,6 +95,7 @@ const MessageChannel = (props: any) => {
       message: res.text,
     });
     console.log(res);
+    setMessage("");
     placeHolderBottom.current.lastElementChild.scrollIntoView({
       behavior: "smooth",
     });
@@ -169,6 +171,7 @@ const MessageChannel = (props: any) => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setMessage(e.target.value)
                 }
+                ref={messageRef}
               />
               <SendSvg handleNewMessage={handleNewMessage} />
             </div>

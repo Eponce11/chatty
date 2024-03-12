@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import StatusIcon from "./StatusIcon";
-import { CancelSvg } from "../../../common/static/svg";
+import { CancelSvg, DefaultProfileSvg } from "../../../common/static/svg";
 import { useSearchUserByUsernameMutation } from "../../../api/userApiSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
@@ -29,6 +29,7 @@ const CreateDm = (props: any) => {
       userId: userId,
     }).unwrap();
     setUserList([res]);
+    setSearchUsername("");
     console.log(res);
   };
 
@@ -56,6 +57,7 @@ const CreateDm = (props: any) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setSearchUsername(e.target.value)
               }
+              value={searchUsername}
             />
           </div>
           <ul className="top-[90px]  w-full bottom-[55px] absolute overflow-y-auto">
@@ -66,7 +68,15 @@ const CreateDm = (props: any) => {
                   className="h-[42px] w-full flex items-center justify-between"
                 >
                   <div className="flex items-center">
-                    <div className="bg-[red] aspect-square h-[32px] rounded-full mr-3" />
+                  {user.userProfilePicture ? (
+                      <img
+                        src={user.userProfilePicture}
+                        alt="profilePicture"
+                        className="w-[35px] h-[35px] mr-2 rounded-full"
+                      />
+                    ) : (
+                      <DefaultProfileSvg className="w-[35px] h-[35px] mr-2" />
+                    )}
                     <span className="text-white">{user.username}</span>
                   </div>
                   <StatusIcon
@@ -94,3 +104,5 @@ const CreateDm = (props: any) => {
 };
 
 export default CreateDm;
+
+//<div className="bg-[red] aspect-square h-[32px] rounded-full mr-3" />

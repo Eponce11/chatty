@@ -27,6 +27,10 @@ export const searchUserByUsername = asyncHandler(
     const response = {
       userId: user._id,
       username: user.username,
+      userProfilePicture:
+        user.profilePicture === null
+          ? null
+          : await getImage(user.profilePicture),
       status: "NONE",
     };
 
@@ -44,28 +48,35 @@ export const searchUserByUsername = asyncHandler(
 export const setNewProfilePicture = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { _id } = req.body;
-    
+
     // if user is not found
     const user = await User.findById(_id);
     if (!user) return res.sendStatus(400);
-    
+
     // delete previous image from s3 if it exists
     if (user.profilePicture !== null) {
       const response = await deleteImage(user.profilePicture);
       if (response === null) return res.sendStatus(400);
     }
-    
+
     let imageName = null;
 
     if (req.file) {
       imageName = await uploadImage(req.file);
-    }; 
-    
-    const updatedUser = await User.findByIdAndUpdate({ _id }, { profilePicture: imageName }, { new: true })
-    
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(
+      { _id },
+      { profilePicture: imageName },
+      { new: true }
+    );
+
     if (!updatedUser) return res.sendStatus(400);
 
-    const updatedProfilePicture = updatedUser.profilePicture === null ? null : await getImage(updatedUser.profilePicture)
+    const updatedProfilePicture =
+      updatedUser.profilePicture === null
+        ? null
+        : await getImage(updatedUser.profilePicture);
 
     return res.json({ profilePicture: updatedProfilePicture });
   }
