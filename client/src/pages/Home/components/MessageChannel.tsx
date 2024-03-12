@@ -110,7 +110,7 @@ const MessageChannel = (props: any) => {
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section
-            className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto"
+            className="w-full top-0 px-3 bottom-[68px] absolute overflow-y-auto scrollbar"
             ref={placeHolderBottom}
           >
             {messages.map((message: any, idx: number) => {
