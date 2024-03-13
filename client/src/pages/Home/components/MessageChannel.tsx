@@ -17,6 +17,7 @@ interface ChatInfo {
   userId: string;
   username: string;
   userProfilePicture: string | null;
+  createdAt: string;
 }
 
 const MessageChannel = (props: any) => {
@@ -34,6 +35,7 @@ const MessageChannel = (props: any) => {
     userId: "",
     username: "",
     userProfilePicture: null,
+    createdAt: "",
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
   const placeHolderBottom = useRef<any>();
@@ -51,6 +53,7 @@ const MessageChannel = (props: any) => {
           userId: res.userId,
           username: res.username,
           userProfilePicture: res.userProfilePicture,
+          createdAt: res.createdAt,
         });
         setMessages([...res.messages]);
         setIsLoading(false);
@@ -98,13 +101,12 @@ const MessageChannel = (props: any) => {
       console.log(res);
       setMessage("");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     } finally {
       placeHolderBottom.current.lastElementChild.scrollIntoView({
         behavior: "smooth",
       });
     }
-    
   };
 
   return isLoading ? null : (
@@ -187,6 +189,7 @@ const MessageChannel = (props: any) => {
         <UserSidePanel
           chatUsername={chatInfo.username}
           chatProfilePicture={chatInfo.userProfilePicture}
+          createdAt={chatInfo.createdAt}
         />
       </div>
     </div>

@@ -11,6 +11,7 @@ export interface User {
   refreshToken: string;
   profilePicture: string | null;
   servers: mongoose.Schema.Types.ObjectId[];
+  createdAt: any;
 }
 
 const UserSchema = new Schema<User>(

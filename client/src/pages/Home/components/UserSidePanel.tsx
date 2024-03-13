@@ -1,7 +1,8 @@
 import { DefaultProfileSvg } from "../../../common/static/svg";
+import { dateParser } from "../../../common/utils/dateParser";
 
 const UserSidePanel = (props: any) => {
-  const { chatUsername, chatProfilePicture } = props;
+  const { chatUsername, chatProfilePicture, createdAt } = props;
 
   return (
     <aside className="w-[340px] h-full bg-[#232428]">
@@ -29,7 +30,7 @@ const UserSidePanel = (props: any) => {
             <h6 className="font-bold text-[11px] text-[white]">
               DISCORD MEMBER SINCE
             </h6>
-            <span>Jun 1, 2020</span>
+            <span>{dateParser(createdAt)}</span>
           </li>
           <li>
             <h6 className="font-bold text-[11px] text-[white]">NOTE</h6>
