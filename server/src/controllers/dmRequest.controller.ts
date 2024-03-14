@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getImage } from "./s3.controller";
 import asyncHandler from "express-async-handler";
 import DmRequest from "../models/dmRequest.model";
 import DmChat from "../models/dmChat.model";
@@ -8,7 +9,7 @@ export const createDmRequest = asyncHandler(
   async (req: Request, res: Response): Promise<any> => {
     const { from, to } = req.body;
 
-    if (from === to) return res.status(400).json({ error: "Cannot Add Self" })
+    if (from === to) return res.status(400).json({ error: "Cannot Add Self" });
 
     const chatExists = await DmChat.findOne({
       users: {
@@ -51,14 +52,20 @@ export const getDmRequests = asyncHandler(
 
     if (!dmRequests) return res.sendStatus(400);
 
-    const response = dmRequests.map((dmRequest) => {
-      const { sender } = dmRequest;
-      return {
-        dmRequestId: dmRequest._id,
-        userId: sender._id,
-        username: sender.username,
-      };
-    });
+    const response = await Promise.all(
+      dmRequests.map(async (dmRequest) => {
+        const { sender } = dmRequest;
+        return {
+          dmRequestId: dmRequest._id,
+          userId: sender._id,
+          username: sender.username,
+          profilePicture:
+            sender.profilePicture === null
+              ? null
+              : await getImage(sender.profilePicture),
+        };
+      })
+    );
 
     return res.json(response);
   }
@@ -74,15 +81,20 @@ export const getDmPending = asyncHandler(
 
     if (!dmPending) return res.sendStatus(400);
 
-    const response = dmPending.map((pending) => {
-      const { receiver } = pending;
-
-      return {
-        dmRequestId: pending._id,
-        userId: receiver._id,
-        username: receiver.username,
-      };
-    });
+    const response = await Promise.all(
+      dmPending.map(async (pending) => {
+        const { receiver } = pending;
+        return {
+          dmRequestId: pending._id,
+          userId: receiver._id,
+          username: receiver.username,
+          profilePicture:
+            receiver.profilePicture === null
+              ? null
+              : await getImage(receiver.profilePicture),
+        };
+      })
+    );
     return res.json(response);
   }
 );
