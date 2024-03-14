@@ -10,8 +10,8 @@ import {
   useCreateMessageMutation,
   useGetChatMessagesMutation,
 } from "../../../api/messageApiSlice";
-import { SendSvg, AddSvg, DefaultProfileSvg } from "../../../common/static/svg";
-import { Header, UserSidePanel, ServerMembersSidePanel } from ".";
+import { SendSvg, DefaultProfileSvg, UserInfoSvg } from "../../../common/static/svg";
+import { Header, UserSidePanel } from ".";
 import { NewMessageResponse } from "../../../api/messageApiSlice/types";
 interface ChatInfo {
   userId: string;
@@ -38,6 +38,8 @@ const MessageChannel = (props: any) => {
     createdAt: "",
   });
   const [messages, setMessages] = useState<NewMessageResponse[]>([]);
+  const [isUserSidePanelOpen, setIsUserSidePanelOpen] =
+    useState<boolean>(false);
   const placeHolderBottom = useRef<any>();
   const messageRef = useRef<any>();
 
@@ -114,7 +116,9 @@ const MessageChannel = (props: any) => {
       <Header
         title={`${chatInfo.username}`}
         image={chatInfo.userProfilePicture}
-      />
+      >
+        <UserInfoSvg onClick={() => setIsUserSidePanelOpen((prev: boolean) => !prev)}/>
+      </Header>
       <div className="w-full top-[48px] bottom-0 absolute flex">
         <div className="grow relative">
           <section
@@ -186,11 +190,13 @@ const MessageChannel = (props: any) => {
             </div>
           </section>
         </div>
-        <UserSidePanel
-          chatUsername={chatInfo.username}
-          chatProfilePicture={chatInfo.userProfilePicture}
-          createdAt={chatInfo.createdAt}
-        />
+        {isUserSidePanelOpen && (
+          <UserSidePanel
+            chatUsername={chatInfo.username}
+            chatProfilePicture={chatInfo.userProfilePicture}
+            createdAt={chatInfo.createdAt}
+          />
+        )}
       </div>
     </div>
   );

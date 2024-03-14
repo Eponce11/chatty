@@ -11,6 +11,7 @@ import DefaultProfileSvg from "./DefaultProfileSvg";
 import CancelSvg from "./CancelSvg";
 import RightArrowSvg from "./RightArrowSvg";
 import HashTag from "./HashTag";
+import UserInfoSvg from "./UserInfoSvg";
 export {
   UserSvg,
   MessageSvg,
@@ -25,4 +26,5 @@ export {
   CancelSvg,
   RightArrowSvg,
   HashTag,
+  UserInfoSvg,
 };
