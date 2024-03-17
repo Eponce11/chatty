@@ -122,3 +122,14 @@ export const acceptDmRequest = asyncHandler(
       });
   }
 );
+
+export const declineDmRequest = asyncHandler(
+  async (req: Request, res: Response): Promise<any> => {
+    const { requestId } = req.body;
+    const deletedRequest = await DmRequest.findByIdAndDelete(requestId);
+
+    if (!deletedRequest) return res.sendStatus(400);
+
+    return res.json({ Msg: "Request Declined" });
+  }
+);

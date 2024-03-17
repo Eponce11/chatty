@@ -29,6 +29,13 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         body: { ...data },
       }),
     }),
+    declineDmRequest: builder.mutation<any, any>({
+      query: (data: any) => ({
+        url: "/dmRequest/decline",
+        method: "POST",
+        body: { ...data },
+      }),
+    }),
   }),
 });
 
@@ -37,4 +44,5 @@ export const {
   useGetDmRequestsQuery,
   useGetDmPendingQuery,
   useAcceptDmRequestMutation,
+  useDeclineDmRequestMutation,
 } = dmRequestApiSlice;

@@ -4,6 +4,7 @@ import { MessageSvg, DefaultProfileSvg } from "../../../common/static/svg";
 import {
   useGetDmRequestsQuery,
   useGetDmPendingQuery,
+  useDeclineDmRequestMutation,
 } from "../../../api/dmRequestApiSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
@@ -21,7 +22,12 @@ const MessageRequestChannel = () => {
   const { currentData: pendingCurrentData, isFetching: isFetchingPending } =
     useGetDmPendingQuery(id);
 
-  
+  const [declineDmRequest] = useDeclineDmRequestMutation();
+
+  const handleDeclineDmRequest = async (requestId: string) => {
+    const res = await declineDmRequest({ requestId: requestId }).unwrap();
+    console.log(res);
+  };
 
   const requestContent = (
     <>
@@ -51,7 +57,12 @@ const MessageRequestChannel = () => {
                   <button className="bg-[#505257] px-3 py-1 rounded-sm text-white mr-3 hover:bg-[#626469] ">
                     Accept
                   </button>
-                  <button className="bg-[#e74646] px-3 py-1 rounded-sm text-white hover:bg-[#e45656]">
+                  <button
+                    className="bg-[#e74646] px-3 py-1 rounded-sm text-white hover:bg-[#e45656]"
+                    onClick={() =>
+                      handleDeclineDmRequest(dmRequest.dmRequestId)
+                    }
+                  >
                     Decline
                   </button>
                 </div>
