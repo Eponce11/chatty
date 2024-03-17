@@ -7,6 +7,7 @@ export const dmChatApiSlice = apiSlice.injectEndpoints({
         url: `/dmChat/get/${id}`,
         method: "GET",
       }),
+      providesTags: ["DmChat"],
     }),
     getOneChat: builder.query<any, any>({
       query: (id: string) => ({

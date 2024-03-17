@@ -15,6 +15,7 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         url: `/dmRequest/getRequests/${id}`,
         method: "GET",
       }),
+      providesTags: ["DmRequest"],
     }),
     getDmPending: builder.query<any, any>({
       query: (id: string) => ({
@@ -28,6 +29,7 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...data },
       }),
+      invalidatesTags: ["DmRequest", "DmChat"],
     }),
     declineDmRequest: builder.mutation<any, any>({
       query: (data: any) => ({
@@ -35,6 +37,7 @@ export const dmRequestApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { ...data },
       }),
+      invalidatesTags: ["DmRequest"],
     }),
   }),
 });
