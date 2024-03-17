@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Header } from ".";
-import { MessageSvg, DefaultProfileSvg } from "../../../common/static/svg";
+import { DefaultProfileSvg } from "../../../common/static/svg";
 import {
   useGetDmRequestsQuery,
   useGetDmPendingQuery,
   useDeclineDmRequestMutation,
+  useAcceptDmRequestMutation,
 } from "../../../api/dmRequestApiSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
@@ -23,9 +24,15 @@ const MessageRequestChannel = () => {
     useGetDmPendingQuery(id);
 
   const [declineDmRequest] = useDeclineDmRequestMutation();
+  const [acceptDmRequest] = useAcceptDmRequestMutation();
 
   const handleDeclineDmRequest = async (requestId: string) => {
     const res = await declineDmRequest({ requestId: requestId }).unwrap();
+    console.log(res);
+  };
+
+  const handleAcceptDmRequest = async (userId: string) => {
+    const res = await acceptDmRequest({ from: userId, to: id }).unwrap();
     console.log(res);
   };
 
@@ -54,7 +61,10 @@ const MessageRequestChannel = () => {
                   </span>
                 </div>
                 <div>
-                  <button className="bg-[#505257] px-3 py-1 rounded-sm text-white mr-3 hover:bg-[#626469] ">
+                  <button
+                    className="bg-[#505257] px-3 py-1 rounded-sm text-white mr-3 hover:bg-[#626469]"
+                    onClick={() => handleAcceptDmRequest(dmRequest.userId)}
+                  >
                     Accept
                   </button>
                   <button
