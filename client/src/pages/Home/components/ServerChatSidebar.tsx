@@ -28,9 +28,9 @@ const ServerChatSidebar = () => {
                 TEXT CHANNELS
               </span>
               <div
-                className="bg-[blue] h-3 aspect-square"
+                className="text-[30px] hover:text-white cursor-pointer"
                 onClick={() => setIsCreateChannelOpen(true)}
-              />
+              >+</div>
             </div>
 
             {serverData.textChannels.map((channel: any) => {

@@ -12,6 +12,7 @@ import CancelSvg from "./CancelSvg";
 import RightArrowSvg from "./RightArrowSvg";
 import HashTag from "./HashTag";
 import UserInfoSvg from "./UserInfoSvg";
+import HomeSvg from "./HomeSvg";
 export {
   UserSvg,
   MessageSvg,
@@ -27,4 +28,5 @@ export {
   RightArrowSvg,
   HashTag,
   UserInfoSvg,
+  HomeSvg
 };

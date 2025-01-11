@@ -4,6 +4,8 @@ import { useGetServersQuery } from "../../../api/serverApiSlice";
 import { useAppSelector } from "../../../app/hooks";
 import { selectAuthId } from "../../../app/features/authSlice";
 import { CreateServer } from ".";
+import { HomeSvg } from "../../../common/static/svg";
+import Home from "..";
 
 const ServerSelect = () => {
   const id = useAppSelector(selectAuthId);
@@ -18,9 +20,12 @@ const ServerSelect = () => {
           className="border-b-2 pb-2 border-[#35363C]"
           onClick={() => navigate("/home")}
         >
-          <div className="w-[48px] aspect-square bg-[blue] rounded-[30px] cursor-pointer ease-out duration-200 hover:rounded-[15px]" />
+          <div className="w-[48px] aspect-square bg-[#313338] rounded-[30px] cursor-pointer ease-out duration-200 hover:rounded-[15px] flex items-center justify-center hover:bg-[#23A559]" >
+            <HomeSvg />
+          </div>
+          
         </li>
-
+        
         {servers.servers.map((server: any, idx: number) => {
           return (
             <li
