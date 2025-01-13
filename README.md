@@ -1,6 +1,11 @@
 # Chatty
+
 ## Summary
+
+The goal was to develop a full-stack MERN application inspired by the functionality of Discord. The project incorporated a variety of advanced technologies, including the integration of Amazon Web Services (AWS) to enhance specific features.
+
 ## Technologies
+
 - Typescript
 - React
 - Vite
@@ -23,6 +28,7 @@
 ![server](https://github.com/user-attachments/assets/b7838d11-fd5a-4ab4-a707-87d190d0530c)
 
 ## Features
+
 - Login and Registration
 - Search for users and request to chat
 - Accept or decline chat requests
@@ -33,9 +39,10 @@
 - Add profile picture or server picture
 
 ## Functionality
-- Developed with a React TypeScript front-end using Vite for efficient project building, TailwindCSS for clean and responsive UI design, Redux Toolkit for centralized state management, and RTK Query for seamless API integration with the back-end server.
-- Integrated MongoDB with Mongoose(ODM) in an Express Node TypeScript server, managing persistent storage for user-created servers, previously communicated messages, and S3 image names for profile picture accessibility.
-- Incorporated Socket.io for real-time user updates, including online/offline status for friends and servers, and live updated message communication.
-- Integrated AWS S3 using the AWS SDK and IAM,establishing programmatic access for connecting to the bucket.
+
+- Developed with a `React` `TypeScript` front-end using `Vite` for efficient project building, `TailwindCSS` for clean and responsive UI design, `Redux Toolkit` for centralized state management, and `RTK Query` for seamless API integration with the back-end server.
+- Integrated `MongoDB` with `Mongoose(ODM)` in an `Express` `TypeScript` server, managing persistent storage for user-created servers, previously communicated messages, and `S3` image names for profile picture accessibility.
+- Incorporated `Socket.io` for real-time user updates, including online/offline status for friends and servers, and live updated message communication.
+- Integrated `AWS` `S3` using the `AWS SDK` and `IAM`,establishing programmatic access for connecting to the bucket.
 - Implemented storage for user images and enabled temporary access through signed URLs to the images.
-- Incorporated Vitest Testing framework for catching any bugs that may slow down or disrupt development
+- Incorporated `Vitest` Testing framework for catching any bugs that may slow down or disrupt development
